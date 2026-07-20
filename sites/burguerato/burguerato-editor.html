@@ -1,0 +1,343 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burguerato Mix Gastronômico | Village, Rio das Ostras</title>
+<meta name="description" content="Burguerato Mix Gastronômico em Rio das Ostras: hambúrgueres artesanais, pizzas e esfihas. Nota 4,7 no Google com 588 avaliações. Peça pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700;900&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FB7B00; --orange-deep:#7A3900; --charcoal:#221D18; --cream:#FFF4E8;
+    --ink:#221D18; --paper:#FFFCF8; --paper-2:#F6EEE2; --line:#ECE1CF; --muted:#6E6355;
+    --radius:18px; --shadow:0 10px 30px rgba(34,29,24,.12);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Rubik',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;color:var(--charcoal);margin:0;line-height:1.12}
+  h1{font-size:clamp(2.1rem,4.5vw + 1rem,3.5rem);font-weight:800}
+  h2{font-size:clamp(1.6rem,2.5vw + 1rem,2.4rem);font-weight:700}
+  h3{font-size:clamp(1.05rem,1vw + 1rem,1.3rem);font-weight:700}
+  p{margin:0 0 1rem}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  section{padding:clamp(56px,8vw,105px) 0}
+  .kicker{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-deep);background:rgba(251,123,0,.1);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;font-weight:700;padding:16px 28px;border-radius:12px;text-decoration:none;font-size:1rem;transition:transform .2s, box-shadow .2s;box-shadow:0 8px 22px rgba(251,123,0,.35)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(251,123,0,.45)}
+  .btn-outline{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--orange);color:var(--orange-deep);font-weight:700;padding:14px 26px;border-radius:12px;text-decoration:none;font-size:.95rem}
+  .btn-caption{display:block;font-size:.78rem;font-weight:400;color:var(--muted);margin-top:8px}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(255,252,248,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:1160px;margin:0 auto}
+  .nav-brand{display:flex;align-items:center;gap:12px}
+  .nav-brand img{height:46px;width:46px;object-fit:cover;border-radius:50%;border:2px solid var(--orange)}
+  .nav-brand strong{font-family:'Fraunces',serif;font-size:1.05rem;color:var(--charcoal)}
+  .nav-brand span{display:block;font-size:.72rem;color:var(--muted)}
+  .nav .btn{padding:11px 20px;font-size:.85rem}
+
+  .hero-banner{position:relative;height:clamp(300px,44vw,480px);overflow:hidden}
+  .hero-banner img{width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
+  .hero-overlay{position:absolute;inset:0;display:flex;align-items:center}
+  .hero-overlay .wrap{color:#fff}
+  .hero-overlay h1{color:#fff}
+  .hero-list{list-style:none;padding:0;margin:18px 0 26px;display:flex;flex-wrap:wrap;gap:10px 22px}
+  .hero-list li{display:flex;gap:8px;align-items:center;font-size:.92rem;color:#FCEBD8}
+  .hero-list li:before{content:"🍔"}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border-radius:12px;padding:9px 16px;font-size:.85rem;font-weight:700;margin-bottom:18px}
+  .stars{color:#F5A623;letter-spacing:2px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+
+  .social{background:var(--charcoal);color:#fff}
+  .social h2{color:#fff}
+  .social-top{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;margin-bottom:40px}
+  .rating-card{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:18px 24px}
+  .rating-num{font-family:'Fraunces',serif;font-size:2.3rem;font-weight:800;color:var(--orange)}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:860px){.quotes{grid-template-columns:1fr}}
+  .quote{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:24px}
+  .quote p{font-size:.95rem;color:#F5EFE7;margin-bottom:10px}
+  .quote span{font-size:.8rem;color:#BDB4A6}
+
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+  @media(max-width:860px){.menu-grid{grid-template-columns:1fr}}
+  .menu-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s}
+  .menu-card:hover{transform:translateY(-4px)}
+  .menu-card img{width:100%;height:200px;object-fit:cover}
+  .menu-card-body{padding:20px}
+  .menu-card a{font-weight:700;font-size:.85rem;color:var(--orange-deep);text-decoration:none}
+  .price-tag{font-family:'Fraunces',serif;font-weight:700;color:var(--charcoal);display:block;margin:6px 0}
+
+  .about{background:var(--paper-2)}
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+  .about-photo{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .cred-list{list-style:none;padding:0;margin:20px 0;display:grid;gap:12px}
+  .cred-list li{display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:.92rem}
+  .cred-list b{color:var(--charcoal)}
+
+  .grid-small{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+  @media(max-width:860px){.grid-small{grid-template-columns:1fr 1fr}}
+  .small-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);text-align:center}
+  .small-card .ico{font-size:1.6rem;margin-bottom:6px}
+
+  .faq-item{border-bottom:1px solid var(--line);padding:18px 0}
+  .faq-item summary{cursor:pointer;font-family:'Fraunces',serif;font-weight:700;color:var(--charcoal);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary:after{content:"+";font-size:1.4rem;color:var(--orange)}
+  .faq-item[open] summary:after{content:"–"}
+  .faq-item p{margin-top:12px;color:var(--muted);font-size:.95rem}
+
+  .contact{background:var(--charcoal);color:#fff}
+  .contact h2{color:#fff}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px}
+  @media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
+  .contact-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:26px}
+  .contact-card h3{color:#fff;margin-bottom:14px}
+  .contact-row{display:flex;gap:12px;flex-wrap:wrap;overflow-wrap:anywhere;margin-bottom:12px;font-size:.92rem;color:#F1E9DD}
+  .contact-row b{color:#fff}
+  iframe{width:100%;height:100%;min-height:280px;border:0;border-radius:var(--radius)}
+
+  footer{background:var(--ink);color:#C4BBAC;font-size:.85rem;padding:32px 0}
+  .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+  .foot-grid strong{color:#fff}
+
+  .whatsapp-float{position:fixed;right:20px;bottom:20px;z-index:60;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25);text-decoration:none;font-size:1.6rem}
+</style>
+
+<header>
+  <div class="nav">
+    <div class="nav-brand">
+      <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/company/logo/10655/7e52b8b0WhatsApp_Image_2025-05-25_at_15.31.54.jpeg" alt="Logo Burguerato Mix Gastronômico">
+      <div><strong>Burguerato</strong><span>Mix Gastronômico</span></div>
+    </div>
+    <a class="btn" href="https://wa.me/5522997145276?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido" target="_blank" rel="noopener">Pedir no WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-banner">
+    <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/company/image/10655/0ee420f9burguerato_mix_gastronomico_469051068_18056425882905520_6035753987218876724_n.jpg" alt="Burguerato Mix Gastronômico">
+    <div class="hero-overlay">
+      <div class="wrap">
+        <span class="hero-badge"><span class="stars">★★★★★</span>&nbsp;4,7 no Google</span>
+        <h1>Hambúrguer, pizza e esfiha — tudo no mesmo lugar</h1>
+        <ul class="hero-list">
+          <li>Blend artesanal de 150g</li>
+          <li>Pizzas e esfihas no cardápio</li>
+          <li>Village, Rio das Ostras</li>
+        </ul>
+        <div class="hero-cta">
+          <div>
+            <a class="btn" href="https://wa.me/5522997145276?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido" target="_blank" rel="noopener">Fazer meu pedido</a>
+            <span class="btn-caption" style="color:#EAD9C6">Resposta rápida no WhatsApp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="social">
+  <div class="wrap">
+    <span class="kicker" style="background:rgba(251,123,0,.15);color:var(--orange)">Prova real, direto do Google</span>
+    <div class="social-top">
+      <h2>Quem já provou, recomenda</h2>
+      <div class="rating-card">
+        <div class="rating-num">4,7</div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div style="font-size:.85rem;color:#D8CFC1">588 avaliações no Google</div>
+        </div>
+      </div>
+    </div>
+    <div class="quotes">
+      <div class="quote"><p>"Várias opções de lanches, pizza, petisco, carne e claro os hambúrgueres!!"</p><span>— Avaliação no Google</span></div>
+      <div class="quote"><p>"Vale muito à pena, os hambúrgueres e as esfirras são extremamente saborosas!"</p><span>— Avaliação no Google</span></div>
+      <div class="quote"><p>"Ótimo atendimento do Paulo, ambiente família, música agradável."</p><span>— Avaliação no Google</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cardapio">
+  <div class="wrap">
+    <span class="kicker">Cardápio</span>
+    <h2>Nosso mix: burger, pizza e esfiha</h2>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/item/image/3525364/b0aa0558f031530f-3cbe-4a64-b02d-a6c2c509510e.jfif" alt="Viking - o maior hambúrguer da casa">
+        <div class="menu-card-body">
+          <h3>Viking</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">3 blends de 120g, muçarela, cheddar e bacon em exagero</p>
+          <span class="price-tag">R$ 43,00</span>
+          <a href="https://wa.me/5522997145276?text=Quero%20pedir%20o%20Viking">Pedir →</a>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/item/image/1462868/30ccce39IMG-20250524-WA0131.jpg" alt="Rodízio do Sofá - 3 Pizzas">
+        <div class="menu-card-body">
+          <h3>Rodízio do Sofá</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">Mais de 1 metro de pizza — 3 sabores para dividir</p>
+          <span class="price-tag">R$ 142,90</span>
+          <a href="https://wa.me/5522997145276?text=Quero%20pedir%20o%20Rod%C3%ADzio%20do%20Sof%C3%A1">Pedir →</a>
+        </div>
+      </div>
+      <div class="menu-card">
+        <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/item/image/2789662/cbbc3664DSC02873_2_(2).jpg" alt="Pizza grande + refrigerante 1.5L">
+        <div class="menu-card-body">
+          <h3>Pizza + Refri</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin-bottom:0">Pizza grande tamanho família + refrigerante 1,5L</p>
+          <span class="price-tag">R$ 65,90</span>
+          <a href="https://wa.me/5522997145276?text=Quero%20pedir%20pizza%20com%20refri">Pedir →</a>
+        </div>
+      </div>
+    </div>
+    <div class="grid-small">
+      <div class="small-card"><div class="ico">🍔</div><h3 style="font-size:1rem">Hambúrgueres</h3><p style="font-size:.85rem;color:var(--muted);margin:0">a partir de R$ 27,50</p></div>
+      <div class="small-card"><div class="ico">🍕</div><h3 style="font-size:1rem">Pizzas</h3><p style="font-size:.85rem;color:var(--muted);margin:0">a partir de R$ 40,00</p></div>
+      <div class="small-card"><div class="ico">🥟</div><h3 style="font-size:1rem">Esfihas</h3><p style="font-size:.85rem;color:var(--muted);margin:0">a partir de R$ 3,90</p></div>
+      <div class="small-card"><div class="ico">🍟</div><h3 style="font-size:1rem">Batatas</h3><p style="font-size:.85rem;color:var(--muted);margin:0">a partir de R$ 9,90</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="sobre">
+  <div class="wrap about-grid">
+    <div class="about-photo">
+      <img src="https://storage.googleapis.com/prod-cardapio-web/uploads/item/image/4099293/f352db6bDSC02482.jpg" alt="Burguerato Mix Gastronômico - hambúrguer artesanal">
+    </div>
+    <div>
+      <span class="kicker">Sobre o Burguerato</span>
+      <h2>O mix gastronômico que Rio das Ostras ama</h2>
+      <p style="color:var(--muted)">No Village, o Burguerato reúne em um só cardápio hambúrgueres artesanais com blend próprio, pizzas generosas e esfihas variadas — pra quem não quer escolher só uma coisa no delivery.</p>
+      <ul class="cred-list">
+        <li><b>Blend artesanal</b> — 150g por hambúrguer, receitas próprias</li>
+        <li><b>Cardápio completo</b> — burger, pizza, esfiha e batatas</li>
+        <li><b>Promoções semanais</b> — segunda é dia de pizza em dobro</li>
+        <li><b>4,7 estrelas</b> — com 588 avaliações no Google</li>
+      </ul>
+      <a class="btn" href="https://wa.me/5522997145276?text=Quero%20fazer%20um%20pedido%20no%20Burguerato" target="_blank" rel="noopener">Fazer pedido</a>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-2)">
+  <div class="wrap">
+    <span class="kicker">Promoções</span>
+    <h2>Ofertas para todo dia</h2>
+    <div class="grid-small">
+      <div class="small-card"><div class="ico">🎁</div><h3 style="font-size:1rem">10% off</h3><p style="font-size:.85rem;color:var(--muted);margin:0">Desconto no primeiro pedido</p></div>
+      <div class="small-card"><div class="ico">⭐</div><h3 style="font-size:1rem">Cliente fiel</h3><p style="font-size:.85rem;color:var(--muted);margin:0">Desconto em produtos e frete</p></div>
+      <div class="small-card"><div class="ico">🍕</div><h3 style="font-size:1rem">Segunda em dobro</h3><p style="font-size:.85rem;color:var(--muted);margin:0">Compre 2, a 3ª pizza é grátis</p></div>
+      <div class="small-card"><div class="ico">🍔</div><h3 style="font-size:1rem">Compre 1 leve 2</h3><p style="font-size:.85rem;color:var(--muted);margin:0">Na segunda pizza selecionada</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper)">
+  <div class="wrap" style="max-width:820px">
+    <span class="kicker">Dúvidas frequentes</span>
+    <h2>Antes de fazer seu pedido</h2>
+    <div style="margin-top:28px">
+      <details class="faq-item" open>
+        <summary>Como faço meu pedido?</summary>
+        <p>Chame no WhatsApp, escolha entre hambúrguer, pizza ou esfiha e confirme o endereço de entrega.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Tem promoção de pizza às segundas?</summary>
+        <p>Sim! Compre 2 pizzas grandes e a terceira, pequena, é cortesia — válido às segundas-feiras.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Posso pedir hambúrguer e pizza juntos?</summary>
+        <p>Sim, o cardápio reúne hambúrgueres, pizzas e esfihas no mesmo pedido.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Onde fica o Burguerato?</summary>
+        <p>No bairro Village, em Rio das Ostras — Estrada Professor Leandro Faria Sarzedas, 416.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contato">
+  <div class="wrap">
+    <span class="kicker" style="background:rgba(251,123,0,.15);color:var(--orange)">Fale com a gente</span>
+    <h2>Peça já o seu mix favorito</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Contato</h3>
+        <div class="contact-row"><b>WhatsApp:</b>&nbsp;(22) 99714-5276</div>
+        <div class="contact-row"><b>Endereço:</b>&nbsp;Estr. Prof. Leandro Faria Sarzedas, 416 — Village, Rio das Ostras/RJ</div>
+        <div class="contact-row"><b>Instagram:</b>&nbsp;@burguerato_mix_gastronomico</div>
+        <a class="btn" style="margin-top:10px" href="https://wa.me/5522997145276?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      </div>
+      <div class="contact-card" style="padding:0;overflow:hidden">
+        <iframe loading="lazy" src="https://www.google.com/maps?q=Estrada+Professor+Leandro+Faria+Sarzedas,+416,+Rio+das+Ostras,+RJ&output=embed"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div><strong>Burguerato</strong> — Mix Gastronômico</div>
+    <div>Village, Rio das Ostras/RJ</div>
+  </div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/5522997145276?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20um%20pedido" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<!-- PROSPECTOR-EDITOR-START -->
+<style id="pe-style">
+#pe-bar{position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#fff;font:14px/1 -apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;gap:16px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#pe-bar button{background:#22c55e;color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer}
+#pe-bar button:hover{background:#16a34a}
+body{margin-top:44px !important}
+.pe-hover{outline:2px dashed #22c55e !important;outline-offset:2px;cursor:pointer}
+[contenteditable="true"]:focus{outline:2px solid #3b82f6 !important;outline-offset:2px}
+</style>
+<div id="pe-bar">
+  <strong>Modo edição</strong>
+  <span>Clique em textos para editar · clique em imagens para trocar</span>
+  <button id="pe-export" type="button">Exportar página</button>
+</div>
+<input type="file" id="pe-file" accept="image/*" style="display:none">
+<script id="pe-script">
+(function(){
+  var TEXT='h1,h2,h3,h4,h5,h6,p,li,a,span,button,td,th,figcaption,blockquote,strong,em';
+  document.querySelectorAll(TEXT).forEach(function(el){
+    if(el.closest('#pe-bar'))return;
+    if(el.children.length===0||el.childElementCount<=1){
+      el.addEventListener('click',function(e){
+        if(el.tagName==='A'||el.tagName==='BUTTON')e.preventDefault();
+        el.setAttribute('contenteditable','true');el.focus();
+      });
+      el.addEventListener('mouseenter',function(){el.classList.add('pe-hover')});
+      el.addEventListener('mouseleave',function(){el.classList.remove('pe-hover')});
+      el.addEventListener('blur',function(){el.removeAttribute('contenteditable')});
+    }
+  });
+  var fileInput=document.getElementById('pe-file'),currentImg=null;
+  document.querySelectorAll('img').forEach(function(img){
+    img.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();currentImg=img;fileInput.click()});
+    img.addEventListener('mouseenter',function(){img.classList.add('pe-hover')});
+    img.addEventListener('mouseleave',function(){img.classList.remove('pe-hover')});
+  });
+  fileInput.addEventListener('change',function(){
+    var f=fileInput.files[0];if(!f||!currentImg)return;
+    var r=new FileReader();
+    r.onload=function(){currentImg.src=r.result;if(currentImg.srcset)currentImg.removeAttribute('srcset')};
+    r.readAsDataURL(f);fileInput.value='';
+  });
+  document.getElementById('pe-export').addEventListener('click',function(){
+    var doc=document.documentElement.cloneNode(true);
+    ['#pe-bar','#pe-style','#pe-script','#pe-file'].forEach(function(s){var n=doc.querySelector(s);if(n)n.remove()});
+    doc.querySelectorAll('[contenteditable]').forEach(function(n){n.removeAttribute('contenteditable')});
+    doc.querySelectorAll('.pe-hover').forEach(function(n){n.classList.remove('pe-hover')});
+    var html='<!DOCTYPE html>\n'+doc.outerHTML;
+    var blob=new Blob([html],{type:'text/html'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
+  });
+})();
+</script>
+<!-- PROSPECTOR-EDITOR-END -->

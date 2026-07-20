@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/treino-vip", "destination": "/sites/treino-vip/treino-vip.html" },
     { "source": "/in-moove", "destination": "/sites/in-moove/in-moove.html" },
-    { "source": "/start-fit", "destination": "/sites/start-fit/start-fit.html" }
+    { "source": "/start-fit", "destination": "/sites/start-fit/start-fit.html" },
+    { "source": "/burguerato", "destination": "/sites/burguerato/burguerato.html" }
   ]
 }
