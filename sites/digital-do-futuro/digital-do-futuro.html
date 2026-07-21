@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Negócio Digital do Futuro — Clone</title>
+    
+    <!-- Google Fonts replacing local fonts: Syne for Clash Display, Space Grotesk for Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/sites/digital-do-futuro/style.css">
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand-mark">
+                <div class="bio-dot"></div>
+                <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 1px;">EURILER JUBÉ</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-fade-bottom"></div>
+        <div class="hero-content reveal in">
+            <div class="hero-brand">
+                <span class="eyebrow">WORKSHOP AO VIVO</span>
+            </div>
+            
+            <div class="hero-badges">
+                <span class="hero-badge">2 DIAS INTENSOS</span>
+                <span class="hero-badge">100% PRÁTICO</span>
+            </div>
+            
+            <h1>Construa seu <span class="glow">Negócio Digital do Futuro</span> com Inteligência Artificial.</h1>
+            
+            <p class="hero-sub">Sem gestor, sem agência, sem lançador. Crie, automatize e escale vendas utilizando o poder da IA no ciclo mais rápido do mercado.</p>
+            
+            <div class="hero-meta">
+                <span>🗓 25 e 26 de Julho</span>
+                <span class="sep">•</span>
+                <span>Zoom Ao Vivo</span>
+            </div>
+            
+            <div class="hero-price">
+                <span class="moeda">R$</span>
+                <span class="valor">97</span>
+            </div>
+            
+            <a href="#" class="cta">
+                <span>Garantir Minha Vaga Agora</span>
+                <span class="arrow">→</span>
+            </a>
+            
+            <div class="trust-row">
+                <span>🔒 Pagamento 100% Seguro</span>
+                <span>✅ Vagas Limitadas</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SO IA Section -->
+    <section class="so-section">
+        <div class="so-inner reveal">
+            <span class="chapter">A TRANSIÇÃO</span>
+            <h2 class="so-title">O modelo antigo <span class="strike">está morto.</span><span class="cursor"></span></h2>
+            <p class="so-sub">Se você ainda depende disso para vender na internet, seu negócio está com os dias contados.</p>
+            
+            <div class="so-cards">
+                <div class="so-card" onclick="this.classList.add('revealed')">
+                    <div class="so-card-before">Contratar agência cara de marketing...</div>
+                    <div class="so-card-after">
+                        <div class="dot"></div>
+                        <span>A IA cria copys e artes em 3 segundos.</span>
+                    </div>
+                    <div class="so-card-hint bounce">CLIQUE PARA REVELAR</div>
+                </div>
+                
+                <div class="so-card" onclick="this.classList.add('revealed')">
+                    <div class="so-card-before">Depender de lançamentos exaustivos...</div>
+                    <div class="so-card-after">
+                        <div class="dot"></div>
+                        <span>Funis automáticos perpétuos que vendem 24/7.</span>
+                    </div>
+                    <div class="so-card-hint bounce">CLIQUE PARA REVELAR</div>
+                </div>
+                
+                <div class="so-card" onclick="this.classList.add('revealed')">
+                    <div class="so-card-before">Ficar travado na tecnologia e código...</div>
+                    <div class="so-card-after">
+                        <div class="dot"></div>
+                        <span>Sistemas "No-code" conectados via prompts.</span>
+                    </div>
+                    <div class="so-card-hint bounce">CLIQUE PARA REVELAR</div>
+                </div>
+            </div>
+            
+            <button class="so-reveal-all" onclick="document.querySelectorAll('.so-card').forEach(c => c.classList.add('revealed'))">
+                Revelar Todos
+            </button>
+        </div>
+    </section>
+
+    <script>
+        // Reveal animation on scroll
+        const revealElements = document.querySelectorAll('.reveal:not(.in)');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
