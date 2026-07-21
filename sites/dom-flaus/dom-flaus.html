@@ -108,6 +108,20 @@
   .foot-grid strong{color:#fff}
 
   .whatsapp-float{position:fixed;right:20px;bottom:20px;z-index:60;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25);text-decoration:none;font-size:1.6rem}
+
+  .floatgallery{padding:clamp(70px,10vw,120px) 0 clamp(90px,12vw,150px);position:relative;overflow:hidden}
+  .floatgallery-grid{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:30px 22px;margin-top:52px;padding:0 12px}
+  .fcard{position:relative;width:210px;border-radius:20px;overflow:hidden;box-shadow:0 22px 45px rgba(34,35,31,.18);background:#fff;padding:8px;transition:transform .35s cubic-bezier(.2,.8,.3,1.2), box-shadow .35s;cursor:pointer}
+  .fcard img{width:100%;height:210px;object-fit:cover;border-radius:14px;display:block}
+  .fcard:nth-child(1){transform:rotate(-6deg) translateY(6px)}
+  .fcard:nth-child(2){transform:rotate(4deg) translateY(-14px)}
+  .fcard:nth-child(3){transform:rotate(-3deg) translateY(10px)}
+  .fcard:nth-child(4){transform:rotate(6deg) translateY(-6px)}
+  .fcard:nth-child(5){transform:rotate(-5deg) translateY(-10px)}
+  .fcard:nth-child(6){transform:rotate(3deg) translateY(8px)}
+  .fcard:hover{transform:rotate(0deg) translateY(-16px) scale(1.06);box-shadow:0 30px 60px rgba(34,35,31,.3);z-index:5}
+  .fcard .fcap{font-size:.72rem;font-weight:800;color:var(--green-deep);text-align:center;padding:8px 4px 2px;text-transform:uppercase;letter-spacing:.03em}
+  @media(max-width:640px){.fcard{width:140px}.fcard img{height:140px}.floatgallery-grid{gap:20px 14px}}
 </style>
 
 <header>
@@ -191,6 +205,22 @@
       <div class="combo-card"><h3>Cupom de boas-vindas</h3><p>Use o código <b>CHEGUEI5</b> e ganhe 5% de desconto no primeiro pedido. Pagando à vista, use <b>AVISTA5</b>.</p></div>
     </div>
     <p style="margin-top:24px;color:var(--muted);font-size:.92rem">🎁 Programa de fidelidade: a cada R$ 1,00 em compras você ganha 1 ponto — novos clientes já começam com 10 pontos de bônus.</p>
+  </div>
+</section>
+
+<section class="floatgallery" style="background:var(--cream)">
+  <div class="wrap">
+    <span class="kicker">Direto do Instagram</span>
+    <h2>Um gostinho do que te espera</h2>
+    <div class="floatgallery-grid">
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-pizzacamaraocostela.jpg" alt="Pizza sabor camarão especial e costela supreme"><div class="fcap">Camarão & Costela</div></div>
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-combo8.jpg" alt="Combo 2 pizzas 45cm com refrigerante"><div class="fcap">Combo Família</div></div>
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-esfihadobro.jpg" alt="Promoção esfiha em dobro às quintas"><div class="fcap">Esfiha em Dobro</div></div>
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-combo5.jpg" alt="Combo 5 pizza grande, broto e refrigerante"><div class="fcap">Combo 5</div></div>
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-frutosdaterra.jpg" alt="Prato do circuito Frutos da Terra"><div class="fcap">Frutos da Terra</div></div>
+      <div class="fcard"><img src="/sites/dom-flaus/img/post-visita.jpg" alt="Venha nos fazer uma visita"><div class="fcap">Vem pra cá!</div></div>
+    </div>
+    <p style="text-align:center;margin-top:36px;font-size:.85rem">📸 Direto do <a href="https://www.instagram.com/domflaus" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;font-weight:700">@domflaus</a> no Instagram</p>
   </div>
 </section>
 
