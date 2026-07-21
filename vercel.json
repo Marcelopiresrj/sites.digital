@@ -5,6 +5,7 @@
     { "source": "/start-fit", "destination": "/sites/start-fit/start-fit.html" },
     { "source": "/burguerato", "destination": "/sites/burguerato/burguerato.html" },
     { "source": "/dom-flaus", "destination": "/sites/dom-flaus/dom-flaus.html" },
-    { "source": "/essencia-beleza", "destination": "/sites/essencia-beleza/essencia-beleza.html" }
+    { "source": "/essencia-beleza", "destination": "/sites/essencia-beleza/essencia-beleza.html" },
+    { "source": "/digital-do-futuro", "destination": "/sites/digital-do-futuro/digital-do-futuro.html" }
   ]
 }
