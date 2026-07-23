@@ -1,12 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/treino-vip", "destination": "/sites/treino-vip/treino-vip.html" },
-    { "source": "/in-moove", "destination": "/sites/in-moove/in-moove.html" },
-    { "source": "/start-fit", "destination": "/sites/start-fit/start-fit.html" },
-    { "source": "/burguerato", "destination": "/sites/burguerato/burguerato.html" },
-    { "source": "/dom-flaus", "destination": "/sites/dom-flaus/dom-flaus.html" },
-    { "source": "/rd-concept", "destination": "/sites/rd-concept/rd-concept.html" },
-    { "source": "/essencia-beleza", "destination": "/sites/essencia-beleza/essencia-beleza.html" },
-    { "source": "/digital-do-futuro", "destination": "/sites/digital-do-futuro/digital-do-futuro.html" }
-  ]
+  "rewrites": []
 }
