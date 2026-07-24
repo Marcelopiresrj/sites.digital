@@ -1,3 +1,5 @@
 {
-  "rewrites": []
+  "rewrites": [
+    { "source": "/camim", "destination": "/sites/camim/camim.html" }
+  ]
 }
