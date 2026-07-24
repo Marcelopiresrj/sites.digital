@@ -41,6 +41,25 @@
   .reveal.show{opacity:1;transform:translateY(0)}
   html{scroll-behavior:smooth}
   body{font-family:'Montserrat',sans-serif}
+
+  /* Carrossel do hero: crossfade automático + zoom lento (Ken Burns) */
+  .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+  .hero-slide.active{opacity:1;z-index:1}
+  .hero-slide img{animation:kenburns 9s ease-in-out infinite alternate}
+  @keyframes kenburns{0%{transform:scale(1)}100%{transform:scale(1.13)}}
+  .hero-dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.5);transition:background .3s, width .3s}
+  .hero-dot.active{background:#fff;width:22px}
+
+  /* Faixas de fotos e especialidades rolando sozinhas */
+  .marquee-wrap{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+  .marquee-wrap:hover .marquee-track{animation-play-state:paused}
+  .marquee-track.marquee-photos{animation-duration:26s}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* Selo ANS flutuando suavemente */
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .floaty{animation:floaty 3.4s ease-in-out infinite}
 </style>
 </head>
 <body class="bg-cream text-ink antialiased overflow-x-hidden">
@@ -81,10 +100,10 @@
           Mais de 30 especialidades, laboratórios próprios e 13 postos de atendimento pelo Rio de Janeiro. Consulta grátis sem carência em diversas especialidades.
         </p>
 
-        <div class="flex flex-wrap gap-8 mb-9">
-          <div><div class="font-extrabold text-3xl text-green leading-none">33 mil</div><div class="text-xs uppercase tracking-wide text-muted mt-1">Associados</div></div>
-          <div><div class="font-extrabold text-3xl text-green leading-none">13</div><div class="text-xs uppercase tracking-wide text-muted mt-1">Postos no RJ</div></div>
-          <div><div class="font-extrabold text-3xl text-green leading-none">50 mil</div><div class="text-xs uppercase tracking-wide text-muted mt-1">Atendimentos/mês</div></div>
+        <div class="flex flex-wrap gap-8 mb-9" id="hero-stats">
+          <div><div class="font-extrabold text-3xl text-green leading-none"><span class="stat-num" data-count="33" data-suffix=" mil">0</span></div><div class="text-xs uppercase tracking-wide text-muted mt-1">Associados</div></div>
+          <div><div class="font-extrabold text-3xl text-green leading-none"><span class="stat-num" data-count="13" data-suffix="">0</span></div><div class="text-xs uppercase tracking-wide text-muted mt-1">Postos no RJ</div></div>
+          <div><div class="font-extrabold text-3xl text-green leading-none"><span class="stat-num" data-count="50" data-suffix=" mil">0</span></div><div class="text-xs uppercase tracking-wide text-muted mt-1">Atendimentos/mês</div></div>
         </div>
 
         <div class="flex flex-wrap gap-4 items-start">
@@ -107,15 +126,21 @@
         </div>
       </div>
 
-      <div class="relative rounded-3xl overflow-hidden border border-line shadow-2xl shadow-ink/10 aspect-[4/5]">
-        <img src="/sites/camim/img/hero.jpg" alt="Atendimento médico Camim" class="w-full h-full object-cover">
-        <div class="absolute left-4 bottom-4 flex items-center gap-2 bg-white/95 backdrop-blur border border-green/30 rounded-xl px-4 py-3 shadow-lg">
+      <div id="hero-carousel" class="relative rounded-3xl overflow-hidden border border-line shadow-2xl shadow-ink/10 aspect-[4/5]">
+        <div class="hero-slide active"><img src="/sites/camim/img/hero.jpg" alt="Atendimento médico Camim" class="w-full h-full object-cover"></div>
+        <div class="hero-slide"><img src="/sites/camim/img/posto-anchieta.jpg" alt="Fachada do posto Camim Anchieta" class="w-full h-full object-cover"></div>
+        <div class="hero-slide"><img src="/sites/camim/img/posto-bangu-1.jpg" alt="Recepção do posto Camim Bangu" class="w-full h-full object-cover"></div>
+        <div class="hero-slide"><img src="/sites/camim/img/posto-campogrande-fachada.jpg" alt="Fachada do posto Camim Campo Grande" class="w-full h-full object-cover"></div>
+        <div class="hero-slide"><img src="/sites/camim/img/posto-bangu-2.jpg" alt="Instalações do posto Camim Bangu" class="w-full h-full object-cover"></div>
+
+        <div class="absolute left-4 bottom-4 z-10 flex items-center gap-2 bg-white/95 backdrop-blur border border-green/30 rounded-xl px-4 py-3 shadow-lg floaty">
           <span class="relative flex w-2.5 h-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
             <span class="relative inline-flex rounded-full w-2.5 h-2.5 bg-green"></span>
           </span>
           <span class="text-sm font-medium">🟢 Regulamentada pela ANS</span>
         </div>
+        <div class="absolute right-4 bottom-4 z-10 flex gap-1.5" id="hero-dots" aria-hidden="true"></div>
       </div>
     </div>
   </section>
@@ -157,25 +182,45 @@
       <span class="inline-block text-xs font-bold uppercase tracking-[0.14em] bg-green-light text-green-deep rounded-full px-4 py-1.5 mb-5">Mais de 30 especialidades</span>
       <h2 id="especialidades-heading" class="text-3xl sm:text-4xl font-extrabold reveal">Cuidado completo pra sua <span class="text-green">família</span></h2>
 
-      <div class="flex flex-wrap gap-3 mt-11">
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Cardiologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Ginecologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Pediatra</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Dermatologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Ortopedista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Clínico Geral</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Endocrinologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Neurologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Psiquiatra</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Urologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Oftalmologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Geriatra</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Obstetra</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Mastologista</span>
-        <span class="reveal bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium">Reumatologista</span>
-        <span class="reveal bg-teal/10 border border-teal/30 text-teal-deep rounded-full px-5 py-2.5 text-sm font-semibold">+ Exames: Tomografia, Mamografia, Fisioterapia e mais</span>
+      <div class="marquee-wrap mt-11 reveal">
+        <div class="marquee-track gap-3 py-1">
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Cardiologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Ginecologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Pediatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Dermatologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Ortopedista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Clínico Geral</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Endocrinologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Neurologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Psiquiatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Urologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Oftalmologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Geriatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Obstetra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Mastologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0">Reumatologista</span>
+          <span class="bg-teal/10 border border-teal/30 text-teal-deep rounded-full px-5 py-2.5 text-sm font-semibold mr-3 shrink-0">+ Tomografia, Mamografia, Fisioterapia e mais</span>
+          <!-- duplicata p/ loop contínuo sem emenda -->
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Cardiologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Ginecologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Pediatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Dermatologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Ortopedista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Clínico Geral</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Endocrinologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Neurologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Psiquiatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Urologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Oftalmologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Geriatra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Obstetra</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Mastologista</span>
+          <span class="bg-white border border-line rounded-full px-5 py-2.5 text-sm font-medium mr-3 shrink-0" aria-hidden="true">Reumatologista</span>
+          <span class="bg-teal/10 border border-teal/30 text-teal-deep rounded-full px-5 py-2.5 text-sm font-semibold mr-3 shrink-0" aria-hidden="true">+ Tomografia, Mamografia, Fisioterapia e mais</span>
+        </div>
       </div>
-      <a href="https://www.camim.com.br/especialidades/" target="_blank" rel="noopener" class="inline-block mt-6 text-sm font-semibold text-green-deep hover:underline">Ver lista completa de especialidades e serviços →</a>
+      <p class="text-xs text-muted mt-2">Passe o mouse pra pausar</p>
+      <a href="https://www.camim.com.br/especialidades/" target="_blank" rel="noopener" class="inline-block mt-4 text-sm font-semibold text-green-deep hover:underline">Ver lista completa de especialidades e serviços →</a>
     </div>
   </section>
 
@@ -185,7 +230,23 @@
       <span class="inline-block text-xs font-bold uppercase tracking-[0.14em] bg-green-light text-green-deep rounded-full px-4 py-1.5 mb-5">Perto de você</span>
       <h2 id="postos-heading" class="text-3xl sm:text-4xl font-extrabold reveal">13 postos de atendimento no <span class="text-green">Rio de Janeiro</span></h2>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-11">
+      <div class="marquee-wrap mt-9 reveal">
+        <div class="marquee-track marquee-photos gap-4">
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4"><img src="/sites/camim/img/posto-bangu-3.jpg" alt="Instalações do posto Camim Bangu" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4"><img src="/sites/camim/img/posto-campogrande-2.jpg" alt="Instalações do posto Camim Campo Grande" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4"><img src="/sites/camim/img/posto-campogrande-3.jpg" alt="Sala de espera do posto Camim Campo Grande" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4"><img src="/sites/camim/img/posto-anchieta.jpg" alt="Fachada do posto Camim Anchieta" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4"><img src="/sites/camim/img/posto-bangu-1.jpg" alt="Recepção do posto Camim Bangu" class="w-full h-full object-cover"></div>
+          <!-- duplicata p/ loop contínuo -->
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4" aria-hidden="true"><img src="/sites/camim/img/posto-bangu-3.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4" aria-hidden="true"><img src="/sites/camim/img/posto-campogrande-2.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4" aria-hidden="true"><img src="/sites/camim/img/posto-campogrande-3.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4" aria-hidden="true"><img src="/sites/camim/img/posto-anchieta.jpg" alt="" class="w-full h-full object-cover"></div>
+          <div class="w-64 h-40 rounded-2xl overflow-hidden shrink-0 mr-4" aria-hidden="true"><img src="/sites/camim/img/posto-bangu-1.jpg" alt="" class="w-full h-full object-cover"></div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-9">
         <div class="reveal bg-cream border border-line rounded-xl p-5"><strong class="block text-sm mb-1">Anchieta</strong><span class="text-sm text-muted">Estr. Mal. Alencastro, 3759</span></div>
         <div class="reveal bg-cream border border-line rounded-xl p-5"><strong class="block text-sm mb-1">Bangu</strong><span class="text-sm text-muted">R. Francisco Real, 1783</span></div>
         <div class="reveal bg-cream border border-line rounded-xl p-5"><strong class="block text-sm mb-1">Campo Grande</strong><span class="text-sm text-muted">Av. Cesário de Melo, 3752</span></div>
@@ -335,6 +396,62 @@
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
   }, {threshold:.15});
   els.forEach(function(el){ io.observe(el); });
+
+  // Carrossel automático do hero (imagens reais dos postos trocando sozinhas)
+  (function(){
+    var slides = document.querySelectorAll('#hero-carousel .hero-slide');
+    var dotsWrap = document.getElementById('hero-dots');
+    var idx = 0, timer;
+    slides.forEach(function(_, i){
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Ver imagem ' + (i + 1));
+      d.addEventListener('click', function(){ goTo(i); restart(); });
+      dotsWrap.appendChild(d);
+    });
+    var dots = dotsWrap.querySelectorAll('.hero-dot');
+    function goTo(i){
+      slides[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = i;
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
+    }
+    function next(){ goTo((idx + 1) % slides.length); }
+    function restart(){ clearInterval(timer); timer = setInterval(next, 4200); }
+    if (slides.length) restart();
+  })();
+
+  // Contadores animados das estatísticas do hero
+  (function(){
+    var statsEl = document.getElementById('hero-stats');
+    if (!statsEl) return;
+    var animated = false;
+    function animateNum(el){
+      var target = parseInt(el.dataset.count, 10);
+      var suffix = el.dataset.suffix || '';
+      var start = null, duration = 1300;
+      function step(ts){
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        el.textContent = Math.floor(p * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    }
+    var statsIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting && !animated){
+          animated = true;
+          statsEl.querySelectorAll('.stat-num').forEach(animateNum);
+          statsIo.disconnect();
+        }
+      });
+    }, {threshold:.4});
+    statsIo.observe(statsEl);
+  })();
 
   document.getElementById('form-simular').addEventListener('submit', function(e){
     e.preventDefault();
