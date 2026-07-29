@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victoire Essências | Perfumaria Fina Importada — Desde 1941 — Nova Iguaçu RJ</title>
+<meta name="description" content="Essências importadas inspiradas nos maiores perfumes do mundo, para ele e para ela, óleos essenciais e aromatizadores de ambiente. Frete grátis acima de R$499, até 12x sem juros. Victoire Essências, Nova Iguaçu RJ.">
+<meta property="og:title" content="Victoire Essências | Perfumaria Fina Importada">
+<meta property="og:description" content="Essências inspiradas nos grandes perfumes do mundo. Frete grátis acima de R$499 e parcelamento em até 12x.">
+<meta property="og:image" content="https://acdn-us.mitiendanube.com/stores/005/840/877/themes/rio/2-slide-1766257586353-7145202647-a2e385d723d10b3456f7bae394f51ddf1766257589-480-0.webp">
+<meta property="og:type" content="website">
+<link rel="icon" href="https://acdn-us.mitiendanube.com/stores/005/840/877/themes/common/logo-934145726-1740345297-1fb331fffab6fb0f048e389d3315bc231740345297-480-0.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
+      colors: {
+        background: '#0c0b09',
+        card: '#16140f',
+        border: '#2a2620',
+        gold: { DEFAULT: '#c9973e', light: '#e0bc72', dark: '#9c7429' },
+        sage: { DEFAULT: '#8ba888', dark: '#5f7a5d' },
+        ink: { DEFAULT: '#f4efe4', muted: '#b3a894' },
+      },
+      boxShadow: {
+        soft: '0 20px 60px -20px rgba(0,0,0,0.6)',
+      },
+      borderRadius: {
+        xl2: '1.25rem',
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #0c0b09; }
+  .bg-radial-gold {
+    background: radial-gradient(circle at 30% 20%, rgba(201,151,62,0.16), transparent 55%);
+  }
+  .divider-gold {
+    background: linear-gradient(90deg, transparent, #c9973e, transparent);
+    height: 1px;
+  }
+  .chip {
+    transition: all .2s ease;
+  }
+  .chip:hover { background-color: rgba(201,151,62,0.14); border-color: #c9973e; }
+  .tab-btn[aria-selected="true"] {
+    background-color: #c9973e; color: #16140f; border-color: #c9973e;
+  }
+  .bottle-card img { transition: transform .35s ease; }
+  .bottle-card:hover img { transform: scale(1.05) translateY(-4px); }
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-thumb { background: #2a2620; border-radius: 8px; }
+  .fade-up { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .maps-frame { filter: grayscale(0.4) invert(0.92) contrast(0.9); }
+</style>
+</head>
+<body class="bg-background text-ink font-sans antialiased">
+
+<!-- Announcement bar -->
+<div class="bg-gold text-[#16140f] text-xs sm:text-sm font-semibold text-center py-2 px-4 tracking-wide">
+  FRETE GRÁTIS para compras acima de R$499,00 &nbsp;·&nbsp; Parcele em até 12x &nbsp;·&nbsp; Compra 100% segura
+</div>
+
+<!-- Header -->
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur border-b border-border">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-20 flex items-center justify-between">
+    <a href="https://www.victoireessencias.com.br" class="flex items-center gap-3">
+      <img src="https://acdn-us.mitiendanube.com/stores/005/840/877/themes/common/logo-934145726-1740345297-1fb331fffab6fb0f048e389d3315bc231740345297-480-0.webp" alt="Victoire Essências" class="h-12 w-auto">
+    </a>
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-ink/90">
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="hover:text-gold transition">Masculinos</a>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="hover:text-gold transition">Femininos</a>
+      <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="hover:text-gold transition">Ambiente</a>
+      <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="hover:text-gold transition">Óleos</a>
+      <a href="#contato" class="hover:text-gold transition">Contato</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="https://www.victoireessencias.com.br" class="hidden sm:inline-flex items-center rounded-lg border border-gold/60 text-gold px-4 py-2 text-sm font-semibold hover:bg-gold hover:text-[#16140f] transition">Ir para a loja</a>
+      <button id="menuBtn" class="lg:hidden p-2 rounded-lg border border-border" aria-label="Abrir menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden border-t border-border bg-background px-5 py-4 flex flex-col gap-4 text-sm font-medium">
+    <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="hover:text-gold">Masculinos</a>
+    <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="hover:text-gold">Femininos</a>
+    <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="hover:text-gold">Ambiente</a>
+    <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="hover:text-gold">Óleos</a>
+    <a href="#contato" class="hover:text-gold">Contato</a>
+    <a href="https://www.victoireessencias.com.br" class="inline-flex justify-center rounded-lg bg-gold text-[#16140f] px-4 py-2 font-semibold">Ir para a loja</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="relative bg-radial-gold overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-14 items-center">
+    <div class="fade-up">
+      <p class="uppercase tracking-[0.25em] text-gold text-xs sm:text-sm font-semibold mb-4">Victoire Essências · Desde 1941</p>
+      <h1 class="font-serif text-[clamp(2rem,5vw,3.4rem)] leading-[1.1] font-semibold text-ink">
+        O perfume que você admira, <span class="text-gold">agora ao seu alcance</span>
+      </h1>
+      <p class="mt-6 text-ink-muted text-ink/80 text-base sm:text-lg max-w-lg">
+        Essências importadas inspiradas nos grandes nomes da perfumaria mundial — masculinas, femininas e para perfumar cada ambiente da sua casa.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="inline-flex items-center justify-center rounded-lg bg-gold text-[#16140f] px-6 py-3 font-semibold hover:bg-gold-light transition shadow-soft">Ver coleção masculina</a>
+        <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="inline-flex items-center justify-center rounded-lg border border-gold/50 text-ink px-6 py-3 font-semibold hover:border-gold hover:text-gold transition">Ver coleção feminina</a>
+      </div>
+      <div class="mt-10 grid grid-cols-3 gap-4 max-w-md">
+        <div class="rounded-xl2 border border-border bg-card px-3 py-4 text-center">
+          <p class="text-gold font-serif text-lg font-semibold">R$499</p>
+          <p class="text-[11px] text-ink-muted mt-1">frete grátis a partir de</p>
+        </div>
+        <div class="rounded-xl2 border border-border bg-card px-3 py-4 text-center">
+          <p class="text-gold font-serif text-lg font-semibold">12x</p>
+          <p class="text-[11px] text-ink-muted mt-1">no cartão, sem juros</p>
+        </div>
+        <div class="rounded-xl2 border border-border bg-card px-3 py-4 text-center">
+          <p class="text-gold font-serif text-lg font-semibold">10%</p>
+          <p class="text-[11px] text-ink-muted mt-1">off em quantidade</p>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up relative">
+      <div class="rounded-xl2 overflow-hidden border border-border shadow-soft relative">
+        <img src="https://acdn-us.mitiendanube.com/stores/005/840/877/themes/rio/2-slide-1766257586353-7145202647-a2e385d723d10b3456f7bae394f51ddf1766257589-480-0.webp" alt="Difusor Elétrico Victoire Essências" class="w-full h-auto object-cover">
+      </div>
+      <div class="absolute -bottom-6 left-6 right-6 sm:left-auto sm:right-6 sm:w-72 bg-card border border-gold/40 rounded-xl2 p-5 shadow-soft">
+        <p class="text-xs uppercase tracking-widest text-gold font-semibold">Super lançamento</p>
+        <p class="font-serif text-xl font-semibold mt-1">Difusor Elétrico</p>
+        <p class="text-sm text-ink-muted mt-1">Aromaterapia para equilibrar o seu dia.</p>
+        <a href="https://www.victoireessencias.com.br/difusores/" class="inline-block mt-3 text-sm font-semibold text-gold hover:underline">Compre agora →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-gold max-w-7xl mx-auto"></div>
+
+<!-- Explorador de categorias / gráfico interativo -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 py-16 lg:py-24">
+  <div class="text-center max-w-2xl mx-auto fade-up">
+    <p class="uppercase tracking-[0.25em] text-gold text-xs font-semibold mb-3">Catálogo</p>
+    <h2 class="font-serif text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold">Explore por categoria</h2>
+    <p class="text-ink-muted mt-3">Mais de 390 opções entre essências e óleos, sempre com frete grátis acima de R$499 e até 10% de desconto em quantidade.</p>
+  </div>
+
+  <div class="mt-12 grid lg:grid-cols-[320px_1fr] gap-10 items-start">
+    <!-- Donut chart -->
+    <div class="fade-up flex flex-col items-center bg-card border border-border rounded-xl2 p-6">
+      <svg id="donut" viewBox="0 0 200 200" class="w-56 h-56 -rotate-90">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#2a2620" stroke-width="24"></circle>
+        <circle data-cat="masculino" cx="100" cy="100" r="80" fill="none" stroke="#c9973e" stroke-width="24" stroke-dasharray="0 502" stroke-linecap="round"></circle>
+        <circle data-cat="feminino" cx="100" cy="100" r="80" fill="none" stroke="#8ba888" stroke-width="24" stroke-dasharray="0 502" stroke-linecap="round"></circle>
+        <circle data-cat="oleo" cx="100" cy="100" r="80" fill="none" stroke="#e0bc72" stroke-width="24" stroke-dasharray="0 502" stroke-linecap="round"></circle>
+        <circle data-cat="ambiente" cx="100" cy="100" r="80" fill="none" stroke="#5f7a5d" stroke-width="24" stroke-dasharray="0 502" stroke-linecap="round"></circle>
+      </svg>
+      <p class="font-serif text-3xl font-semibold text-gold mt-2"><span id="totalCount">0</span>+</p>
+      <p class="text-xs text-ink-muted uppercase tracking-widest">itens no catálogo</p>
+      <div class="grid grid-cols-2 gap-x-4 gap-y-2 mt-6 text-xs w-full">
+        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-gold inline-block"></span>Masculinos (159)</div>
+        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-sage inline-block"></span>Femininos (154)</div>
+        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-gold-light inline-block"></span>Óleo essencial (71)</div>
+        <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-sage-dark inline-block"></span>Ambiente (7)</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="fade-up">
+      <div role="tablist" class="flex flex-wrap gap-3 mb-6">
+        <button class="tab-btn border border-border rounded-lg px-4 py-2 text-sm font-semibold transition" data-tab="masculino" aria-selected="true">Perfumes Masculinos</button>
+        <button class="tab-btn border border-border rounded-lg px-4 py-2 text-sm font-semibold transition" data-tab="feminino" aria-selected="false">Perfumes Femininos</button>
+        <button class="tab-btn border border-border rounded-lg px-4 py-2 text-sm font-semibold transition" data-tab="oleo" aria-selected="false">Óleo Essencial</button>
+        <button class="tab-btn border border-border rounded-lg px-4 py-2 text-sm font-semibold transition" data-tab="ambiente" aria-selected="false">Essência de Ambiente</button>
+      </div>
+      <div class="bg-card border border-border rounded-xl2 p-6 min-h-[220px]">
+        <div data-panel="masculino" class="tab-panel">
+          <p class="text-sm text-ink-muted mb-4">159 essências inspiradas nos maiores lançamentos masculinos do mundo.</p>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Creed Aventus</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Sauvage</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Bleu de Chanel</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Invictus</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">1 Million</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Terre d'Hermès</a>
+          </div>
+          <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="inline-block mt-5 text-sm font-semibold text-gold hover:underline">Ver todos os masculinos →</a>
+        </div>
+        <div data-panel="feminino" class="tab-panel hidden">
+          <p class="text-sm text-ink-muted mb-4">154 essências inspiradas nos grandes clássicos e lançamentos femininos.</p>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Coco Mademoiselle</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Baccarat Rouge 540</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">La Vie Est Belle</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Good Girl</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Delina</a>
+            <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Chanel Nº5</a>
+          </div>
+          <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="inline-block mt-5 text-sm font-semibold text-gold hover:underline">Ver todos os femininos →</a>
+        </div>
+        <div data-panel="oleo" class="tab-panel hidden">
+          <p class="text-sm text-ink-muted mb-4">71 óleos essenciais puros, para aromaterapia, difusores e uso cosmético.</p>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Lavanda</a>
+            <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Alecrim</a>
+            <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Eucalipto</a>
+            <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Alfazema</a>
+          </div>
+          <a href="https://www.victoireessencias.com.br/oleo-essencial/" class="inline-block mt-5 text-sm font-semibold text-gold hover:underline">Ver todos os óleos →</a>
+        </div>
+        <div data-panel="ambiente" class="tab-panel hidden">
+          <p class="text-sm text-ink-muted mb-4">Essências tradicionais de ambiente, frascos de 50ml, para perfumar cada cômodo.</p>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Alecrim</a>
+            <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Amanhecer Tropical</a>
+            <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Algodão</a>
+            <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="chip border border-border rounded-full px-3 py-1.5 text-xs">Alfazema</a>
+          </div>
+          <a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="inline-block mt-5 text-sm font-semibold text-gold hover:underline">Ver toda a linha ambiente →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-gold max-w-7xl mx-auto"></div>
+
+<!-- Featured bottles -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 py-16 lg:py-24">
+  <div class="text-center max-w-2xl mx-auto fade-up">
+    <p class="uppercase tracking-[0.25em] text-gold text-xs font-semibold mb-3">Mais procurados</p>
+    <h2 class="font-serif text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold">Inspirações que todo mundo reconhece</h2>
+  </div>
+  <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/terre-dhermes-midia-solo-7c76e05e914175ea0c17429267475620-480-0.webp" alt="Essência inspirada Terre d'Hermès" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-gold mt-4">Masculino</p>
+      <p class="font-serif font-semibold mt-1">Terre d'Hermès</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/imagination-louis-vuitton-midia-solo-3bd72ab0e4198049a117507984798456-480-0.webp" alt="Essência inspirada Imagination Louis Vuitton" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-gold mt-4">Masculino</p>
+      <p class="font-serif font-semibold mt-1">Imagination LV</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/tobacco-vanille-tf-midia-solo-6bdb009a36c732480717429269336226-480-0.webp" alt="Essência inspirada Tobacco Vanille Tom Ford" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-gold mt-4">Masculino</p>
+      <p class="font-serif font-semibold mt-1">Tobacco Vanille</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/invictus-midia-solo-716546f8c57ae2d8ea17428308537008-480-0.webp" alt="Essência inspirada Invictus" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-gold mt-4">Masculino</p>
+      <p class="font-serif font-semibold mt-1">Invictus</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/coco-mademoiselle-midia-solo-574dfd76563129a88517430014516115-480-0.webp" alt="Essência inspirada Coco Mademoiselle" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-sage mt-4">Feminino</p>
+      <p class="font-serif font-semibold mt-1">Coco Mademoiselle</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/baccarat-rouge-540-maison-francis-kurkdjian-midia-solo-02de341d5ea38719a317429999281213-480-0.webp" alt="Essência inspirada Baccarat Rouge 540" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-sage mt-4">Feminino</p>
+      <p class="font-serif font-semibold mt-1">Baccarat Rouge 540</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/la-vie-est-belle-midia-solo-6e0793a0cd182a274117434442906800-480-0.webp" alt="Essência inspirada La Vie Est Belle" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-sage mt-4">Feminino</p>
+      <p class="font-serif font-semibold mt-1">La Vie Est Belle</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+    <div class="bottle-card fade-up bg-card border border-border rounded-xl2 p-4 flex flex-col items-center text-center hover:border-gold/50 transition">
+      <div class="overflow-hidden rounded-lg w-full aspect-square flex items-center justify-center bg-[#0c0b09]"><img src="https://acdn-us.mitiendanube.com/stores/005/840/877/products/delina-midia-solo-0f494c53a3fe5e70cc17430021586781-480-0.webp" alt="Essência inspirada Delina" class="max-h-full max-w-full object-contain"></div>
+      <p class="text-[10px] uppercase tracking-widest text-sage mt-4">Feminino</p>
+      <p class="font-serif font-semibold mt-1">Delina</p>
+      <p class="text-sm text-ink-muted mt-1">R$ 27,00 · 10ml</p>
+      <a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="mt-3 text-xs font-semibold text-gold hover:underline">Ver na loja →</a>
+    </div>
+
+  </div>
+  <p class="text-center text-xs text-ink-muted mt-6">*Preço de referência do frasco de 10ml. Frascos de 30ml a 1000ml disponíveis na loja.</p>
+</section>
+
+<div class="divider-gold max-w-7xl mx-auto"></div>
+
+<!-- Calculadora de frete grátis -->
+<section class="bg-card/40 border-y border-border">
+  <div class="max-w-4xl mx-auto px-5 sm:px-8 py-16 lg:py-20 text-center fade-up">
+    <p class="uppercase tracking-[0.25em] text-gold text-xs font-semibold mb-3">Simulador</p>
+    <h2 class="font-serif text-[clamp(1.6rem,3.5vw,2.2rem)] font-semibold">Quanto falta para o seu frete grátis?</h2>
+    <p class="text-ink-muted mt-3">Cada essência de 10ml sai por R$27,00. Ajuste a quantidade e veja o quanto falta para chegar aos R$499 de frete grátis.</p>
+
+    <div class="mt-10 bg-card border border-border rounded-xl2 p-6 sm:p-10">
+      <div class="flex items-center justify-center gap-6">
+        <button id="qtyMinus" class="w-11 h-11 rounded-lg border border-gold/50 text-gold text-xl font-bold hover:bg-gold hover:text-[#16140f] transition">−</button>
+        <div class="text-center">
+          <p id="qtyValue" class="font-serif text-4xl font-semibold text-gold">6</p>
+          <p class="text-xs text-ink-muted mt-1">frascos de 10ml</p>
+        </div>
+        <button id="qtyPlus" class="w-11 h-11 rounded-lg border border-gold/50 text-gold text-xl font-bold hover:bg-gold hover:text-[#16140f] transition">+</button>
+      </div>
+
+      <div class="mt-8">
+        <div class="flex justify-between text-sm text-ink-muted mb-2">
+          <span>Subtotal: <strong id="subtotalValue" class="text-ink">R$ 162,00</strong></span>
+          <span>Meta: R$ 499,00</span>
+        </div>
+        <div class="w-full h-3 rounded-full bg-[#2a2620] overflow-hidden">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-gold-dark to-gold rounded-full transition-all duration-500" style="width:0%"></div>
+        </div>
+        <p id="progressMsg" class="mt-4 text-sm font-semibold text-ink"></p>
+      </div>
+
+      <a href="https://www.victoireessencias.com.br/produtos/" class="inline-flex items-center justify-center mt-8 rounded-lg bg-gold text-[#16140f] px-6 py-3 font-semibold hover:bg-gold-light transition">Montar meu kit na loja</a>
+      <p class="text-[11px] text-ink-muted mt-3">*Além do frete grátis, compras em maior quantidade contam com até 10% de desconto aplicado no carrinho da loja.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Sobre -->
+<section class="max-w-5xl mx-auto px-5 sm:px-8 py-16 lg:py-24 text-center fade-up">
+  <p class="uppercase tracking-[0.25em] text-gold text-xs font-semibold mb-3">Sobre a Victoire</p>
+  <h2 class="font-serif text-[clamp(1.6rem,3.5vw,2.2rem)] font-semibold">Perfumaria fina, desde 1941</h2>
+  <p class="text-ink-muted mt-5 max-w-2xl mx-auto leading-relaxed">
+    A Victoire Essências trabalha com essências importadas inspiradas nos grandes nomes da perfumaria mundial, óleos essenciais e aromatizadores de ambiente — para ele, para ela e para a sua casa. Compra 100% segura e criptografada, parcelamento em até 12x e frete grátis para todo o Brasil em compras acima de R$499,00.
+  </p>
+  <div class="mt-10 grid sm:grid-cols-3 gap-6">
+    <div class="border border-border rounded-xl2 p-6 bg-card">
+      <p class="font-serif text-lg font-semibold text-gold">Compra segura</p>
+      <p class="text-sm text-ink-muted mt-2">Ambiente 100% criptografado, do carrinho ao pagamento.</p>
+    </div>
+    <div class="border border-border rounded-xl2 p-6 bg-card">
+      <p class="font-serif text-lg font-semibold text-gold">Frete grátis</p>
+      <p class="text-sm text-ink-muted mt-2">Para todo o Brasil, em compras acima de R$499,00.</p>
+    </div>
+    <div class="border border-border rounded-xl2 p-6 bg-card">
+      <p class="font-serif text-lg font-semibold text-gold">Parcele em 12x</p>
+      <p class="text-sm text-ink-muted mt-2">No cartão, ou à vista no Pix e boleto.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider-gold max-w-7xl mx-auto"></div>
+
+<!-- Contato -->
+<section id="contato" class="max-w-7xl mx-auto px-5 sm:px-8 py-16 lg:py-24">
+  <div class="text-center max-w-2xl mx-auto fade-up">
+    <p class="uppercase tracking-[0.25em] text-gold text-xs font-semibold mb-3">Fale com a gente</p>
+    <h2 class="font-serif text-[clamp(1.6rem,3.5vw,2.4rem)] font-semibold">Contato e loja física</h2>
+  </div>
+  <div class="mt-12 grid lg:grid-cols-2 gap-8 items-stretch">
+    <div class="fade-up bg-card border border-border rounded-xl2 p-8 flex flex-col justify-between min-w-0">
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gold/15 flex items-center justify-center text-gold shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold">Endereço</p>
+            <p class="text-sm text-ink-muted mt-1">Travessa Almerinda Lucas de Azevedo, 23 — Loja 9, Lote 11<br>Centro, Nova Iguaçu — RJ, 26210-180</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gold/15 flex items-center justify-center text-gold shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold">WhatsApp / Telefone</p>
+            <p class="text-sm text-ink-muted mt-1">(21) 97388-6062</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gold/15 flex items-center justify-center text-gold shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold">E-mail</p>
+            <p class="text-sm text-ink-muted mt-1">victoireessencias.mkt@gmail.com</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gold/15 flex items-center justify-center text-gold shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-9 8l1.664-4.155A9.964 9.964 0 013 12C3 6.477 7.477 2 13 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 01-4.83-1.238L3 21z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold">Redes sociais</p>
+            <p class="text-sm text-ink-muted mt-1">Instagram @victoireessenciasoficial · Facebook /VictoireEssencias</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5521973886062?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20as%20ess%C3%AAncias%20Victoire." class="mt-8 inline-flex items-center justify-center rounded-lg bg-gold text-[#16140f] px-6 py-3 font-semibold hover:bg-gold-light transition">Falar no WhatsApp</a>
+    </div>
+    <div class="fade-up rounded-xl2 overflow-hidden border border-border min-h-[320px] min-w-0">
+      <iframe
+        class="maps-frame w-full h-full min-h-[320px]"
+        src="https://www.google.com/maps?q=Travessa+Almerinda+Lucas+de+Azevedo+23+Centro+Nova+Igua%C3%A7u+RJ+26210-180&output=embed"
+        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Victoire Essências">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-border bg-card/40">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <img src="https://acdn-us.mitiendanube.com/stores/005/840/877/themes/common/logo-934145726-1740345297-1fb331fffab6fb0f048e389d3315bc231740345297-480-0.webp" alt="Victoire Essências" class="h-10 w-auto mb-4">
+      <p class="text-sm text-ink-muted">Perfumaria fina importada, desde 1941.</p>
+    </div>
+    <div>
+      <p class="font-semibold text-sm mb-3">Categorias</p>
+      <ul class="space-y-2 text-sm text-ink-muted">
+        <li><a href="https://www.victoireessencias.com.br/essencia-perfume/masculino/" class="hover:text-gold">Perfumes Masculinos</a></li>
+        <li><a href="https://www.victoireessencias.com.br/essencia-perfume/feminino/" class="hover:text-gold">Perfumes Femininos</a></li>
+        <li><a href="https://www.victoireessencias.com.br/essencia-ambiente/" class="hover:text-gold">Essência de Ambiente</a></li>
+        <li><a href="https://www.victoireessencias.com.br/oleo-essencial/" class="hover:text-gold">Óleo Essencial</a></li>
+        <li><a href="https://www.victoireessencias.com.br/difusores/" class="hover:text-gold">Difusores</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold text-sm mb-3">Institucional</p>
+      <ul class="space-y-2 text-sm text-ink-muted">
+        <li><a href="https://www.victoireessencias.com.br" class="hover:text-gold">Loja oficial</a></li>
+        <li><a href="https://www.victoireessencias.com.br/politica-de-privacidade/" class="hover:text-gold">Política de Privacidade</a></li>
+        <li><a href="#contato" class="hover:text-gold">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold text-sm mb-3">Fale com a gente</p>
+      <p class="text-sm text-ink-muted">(21) 97388-6062</p>
+      <p class="text-sm text-ink-muted mt-1">victoireessencias.mkt@gmail.com</p>
+      <p class="text-sm text-ink-muted mt-1">Nova Iguaçu — RJ</p>
+    </div>
+  </div>
+  <div class="border-t border-border text-center text-xs text-ink-muted py-5">
+    © 2026 Victoire Essências. Todos os direitos reservados.
+  </div>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a href="https://wa.me/5521973886062?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20as%20ess%C3%AAncias%20Victoire." target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-soft hover:scale-105 transition" aria-label="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-8 h-8 fill-white"><path d="M16.004 2.667c-7.363 0-13.333 5.97-13.333 13.333 0 2.353.615 4.646 1.782 6.667L2.667 29.333l6.84-1.794a13.27 13.27 0 006.497 1.654h.006c7.362 0 13.333-5.97 13.333-13.333 0-3.56-1.387-6.907-3.903-9.423a13.24 13.24 0 00-9.436-3.77zm0 24.4h-.005a11.05 11.05 0 01-5.633-1.541l-.404-.24-4.06 1.065 1.084-3.958-.263-.406a11.05 11.05 0 01-1.693-5.9c0-6.115 4.977-11.09 11.096-11.09a11.02 11.02 0 017.844 3.246 11.02 11.02 0 013.247 7.85c-.003 6.117-4.98 11.09-11.213 10.974zm6.086-8.302c-.334-.167-1.97-.972-2.276-1.083-.305-.111-.527-.166-.75.167-.222.333-.86 1.083-1.055 1.306-.194.222-.389.25-.722.083-.334-.167-1.409-.52-2.684-1.657-.992-.885-1.663-1.977-1.858-2.31-.194-.333-.02-.513.146-.679.15-.15.334-.389.5-.583.167-.194.222-.333.334-.556.111-.222.055-.417-.028-.583-.083-.167-.75-1.807-1.028-2.474-.27-.649-.545-.561-.75-.572-.194-.01-.417-.012-.639-.012a1.226 1.226 0 00-.889.417c-.305.333-1.166 1.14-1.166 2.78 0 1.64 1.194 3.224 1.36 3.446.167.222 2.352 3.59 5.699 5.036.796.344 1.418.549 1.902.703.799.254 1.526.218 2.101.132.641-.096 1.97-.805 2.248-1.583.278-.778.278-1.444.194-1.583-.083-.14-.305-.222-.639-.389z"/></svg>
+</a>
+
+<script>
+  // Mobile menu
+  document.getElementById('menuBtn').addEventListener('click', function(){
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  });
+
+  // Fade up on scroll
+  var faders = document.querySelectorAll('.fade-up');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  faders.forEach(function(el){ io.observe(el); });
+
+  // Donut chart + counter animation
+  var CIRC = 2*Math.PI*80;
+  var data = [
+    {cat:'masculino', value:159, color:'#c9973e'},
+    {cat:'feminino', value:154, color:'#8ba888'},
+    {cat:'oleo', value:71, color:'#e0bc72'},
+    {cat:'ambiente', value:7, color:'#5f7a5d'}
+  ];
+  var total = data.reduce(function(a,d){return a+d.value;},0);
+  var donutDrawn = false;
+  function drawDonut(){
+    var offset = 0;
+    data.forEach(function(d){
+      var len = (d.value/total)*CIRC;
+      var circle = document.querySelector('circle[data-cat="'+d.cat+'"]');
+      circle.setAttribute('stroke-dasharray', len+' '+CIRC);
+      circle.setAttribute('stroke-dashoffset', -offset);
+      offset += len;
+    });
+  }
+  function animateCount(){
+    var el = document.getElementById('totalCount');
+    var start = 0; var dur = 1200; var t0 = null;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var p = Math.min((ts-t0)/dur, 1);
+      el.textContent = Math.floor(p*total);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var donutSection = document.getElementById('donut');
+  var donutIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !donutDrawn){ donutDrawn = true; drawDonut(); animateCount(); }
+    });
+  }, {threshold:0.4});
+  donutIO.observe(donutSection);
+
+  // Tabs
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.setAttribute('aria-selected','false'); });
+      btn.setAttribute('aria-selected','true');
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.add('hidden'); });
+      document.querySelector('[data-panel="'+btn.dataset.tab+'"]').classList.remove('hidden');
+    });
+  });
+
+  // Calculadora frete grátis
+  var qty = 6, PRICE = 27, GOAL = 499;
+  var qtyValue = document.getElementById('qtyValue');
+  var subtotalValue = document.getElementById('subtotalValue');
+  var progressBar = document.getElementById('progressBar');
+  var progressMsg = document.getElementById('progressMsg');
+  function fmt(n){ return n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function renderCalc(){
+    qtyValue.textContent = qty;
+    var subtotal = qty*PRICE;
+    subtotalValue.textContent = 'R$ '+fmt(subtotal);
+    var pct = Math.min((subtotal/GOAL)*100, 100);
+    progressBar.style.width = pct+'%';
+    if(subtotal >= GOAL){
+      progressMsg.textContent = '🎉 Frete grátis liberado!';
+    } else {
+      progressMsg.textContent = 'Faltam R$ '+fmt(GOAL-subtotal)+' para o frete grátis';
+    }
+  }
+  document.getElementById('qtyPlus').addEventListener('click', function(){ qty = Math.min(qty+1, 40); renderCalc(); });
+  document.getElementById('qtyMinus').addEventListener('click', function(){ qty = Math.max(qty-1, 1); renderCalc(); });
+  renderCalc();
+</script>
+
+<!-- PROSPECTOR-EDITOR-START -->
+<style id="pe-style">
+#pe-bar{position:fixed;top:0;left:0;right:0;z-index:99999;background:#111;color:#fff;font:14px/1 -apple-system,Segoe UI,Roboto,sans-serif;display:flex;align-items:center;gap:16px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#pe-bar button{background:#22c55e;color:#fff;border:0;border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer}
+#pe-bar button:hover{background:#16a34a}
+body{margin-top:44px !important}
+.pe-hover{outline:2px dashed #22c55e !important;outline-offset:2px;cursor:pointer}
+[contenteditable="true"]:focus{outline:2px solid #3b82f6 !important;outline-offset:2px}
+</style>
+<div id="pe-bar">
+  <strong>Modo edição</strong>
+  <span>Clique em textos para editar · clique em imagens para trocar</span>
+  <button id="pe-export" type="button">Exportar página</button>
+</div>
+<input type="file" id="pe-file" accept="image/*" style="display:none">
+<script id="pe-script">
+(function(){
+  var TEXT='h1,h2,h3,h4,h5,h6,p,li,a,span,button,td,th,figcaption,blockquote,strong,em';
+  document.querySelectorAll(TEXT).forEach(function(el){
+    if(el.closest('#pe-bar'))return;
+    if(el.children.length===0||el.childElementCount<=1){
+      el.addEventListener('click',function(e){
+        if(el.tagName==='A'||el.tagName==='BUTTON')e.preventDefault();
+        el.setAttribute('contenteditable','true');el.focus();
+      });
+      el.addEventListener('mouseenter',function(){el.classList.add('pe-hover')});
+      el.addEventListener('mouseleave',function(){el.classList.remove('pe-hover')});
+      el.addEventListener('blur',function(){el.removeAttribute('contenteditable')});
+    }
+  });
+  var fileInput=document.getElementById('pe-file'),currentImg=null;
+  document.querySelectorAll('img').forEach(function(img){
+    img.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();currentImg=img;fileInput.click()});
+    img.addEventListener('mouseenter',function(){img.classList.add('pe-hover')});
+    img.addEventListener('mouseleave',function(){img.classList.remove('pe-hover')});
+  });
+  fileInput.addEventListener('change',function(){
+    var f=fileInput.files[0];if(!f||!currentImg)return;
+    var r=new FileReader();
+    r.onload=function(){currentImg.src=r.result;if(currentImg.srcset)currentImg.removeAttribute('srcset')};
+    r.readAsDataURL(f);fileInput.value='';
+  });
+  document.getElementById('pe-export').addEventListener('click',function(){
+    var doc=document.documentElement.cloneNode(true);
+    ['#pe-bar','#pe-style','#pe-script','#pe-file'].forEach(function(s){var n=doc.querySelector(s);if(n)n.remove()});
+    doc.querySelectorAll('[contenteditable]').forEach(function(n){n.removeAttribute('contenteditable')});
+    doc.querySelectorAll('.pe-hover').forEach(function(n){n.classList.remove('pe-hover')});
+    var html='<!DOCTYPE html>\n'+doc.outerHTML;
+    var blob=new Blob([html],{type:'text/html'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
+  });
+})();
+</script>
+<!-- PROSPECTOR-EDITOR-END -->
+</body>
+</html>
