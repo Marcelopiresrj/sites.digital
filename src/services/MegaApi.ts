@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const MEGA_API_URL = 'https://apistart01.megaapi.com.br/megastart-MBA6X7WV85VHYBVZKNVWAHXH6H7/message/sendText';
-const MEGA_API_TOKEN = process.env.MEGA_API_TOKEN || '';
+const MEGA_API_TOKEN = process.env.MEGA_API_TOKEN || process.env.MEGA_APT_TOKEN || '';
 
 export class MegaApi {
     /**
