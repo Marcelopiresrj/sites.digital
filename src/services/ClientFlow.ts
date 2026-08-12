@@ -46,7 +46,6 @@ export class ClientFlow {
             servicos.forEach((s: any, index: number) => {
                 texto += `${index + 1}. ${s.nome} (${s.duracao_minutos} min)\n`;
             });
-            texto += `\n0. Falar com atendente`;
         } else {
             texto += `No momento não temos serviços configurados. Aguarde um instante!`;
         }
@@ -64,14 +63,8 @@ export class ClientFlow {
         const option = parseInt(message.trim());
         const servicos = session.context_data?.servicos_list || [];
 
-        if (isNaN(option) || option < 0 || option > servicos.length) {
-            await MegaApi.sendMessage(phone, "Opção inválida. Por favor, digite o número correspondente ao serviço desejado.");
-            return;
-        }
-
-        if (option === 0) {
-            await MegaApi.sendMessage(phone, "Ok! Um dos nossos atendentes falará com você em breve.");
-            await supabase.from('sessoes_whatsapp').update({ current_step: 'TALKING_TO_HUMAN' }).eq('telefone', phone);
+        if (isNaN(option) || option <= 0 || option > servicos.length) {
+            await MegaApi.sendMessage(phone, "Opção inválida. Por favor, digite apenas o número correspondente à opção desejada.");
             return;
         }
 
