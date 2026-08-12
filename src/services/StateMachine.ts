@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { PatientFlow } from './PatientFlow';
+import { ClientFlow } from './ClientFlow';
 import { AdminFlow } from './AdminFlow';
 
 export class StateMachine {
@@ -51,13 +51,13 @@ export class StateMachine {
             }
 
             if (isAdmin) {
-                // Se era START de paciente, altera para START de admin
+                // Se era START de cliente, altera para START de admin
                 if (session.current_step === 'START') {
                     session.current_step = 'ADMIN_START';
                 }
                 await AdminFlow.handle(phone, message, session);
             } else {
-                await PatientFlow.handle(phone, message, session);
+                await ClientFlow.handle(phone, message, session);
             }
 
             // Atualiza o updated_at da sessão

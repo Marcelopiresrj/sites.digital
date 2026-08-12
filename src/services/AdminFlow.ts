@@ -14,6 +14,21 @@ export class AdminFlow {
             case 'ADMIN_MENU':
                 await this.stepAdminMenu(phone, message, session);
                 break;
+            case 'AWAITING_APPROVAL':
+                await this.stepAwaitingApproval(phone, message, session);
+                break;
+            case 'CONFIG_AVAILABILITY':
+                await this.stepConfigAvailability(phone, message, session);
+                break;
+            case 'CANCEL_APPOINTMENT':
+                await this.stepCancelAppointment(phone, message, session);
+                break;
+            case 'RESCHEDULE_APPOINTMENT':
+                await this.stepRescheduleAppointment(phone, message, session);
+                break;
+            case 'RESCHEDULE_DATETIME':
+                await this.stepRescheduleDatetime(phone, message, session);
+                break;
             default:
                 await this.stepAdminStart(phone, session);
                 break;
@@ -23,10 +38,14 @@ export class AdminFlow {
     private static async stepAdminStart(phone: string, session: any) {
         const { data: profissional } = await supabase.from('profissionais').select('*').eq('telefone', phone).single();
         
-        const texto = `Olá, *${profissional.nome}* (Admin)!\n\n` +
-                      `1. Ver Agendamentos Pendentes\n` +
-                      `2. Adicionar Serviço\n` +
-                      `3. Sair`;
+        const texto = `Olá, *${profissional.nome}* (Profissional)!\n\n` +
+                      `[ 1 ] - Ver Agendamentos Pendentes (Aprovar)\n` +
+                      `[ 2 ] - Ver Agenda Completa (Confirmados)\n` +
+                      `[ 3 ] - Configurar Dias/Horários Disponíveis\n` +
+                      `[ 4 ] - Cancelar Agendamento\n` +
+                      `[ 5 ] - Remarcar Agendamento\n` +
+                      `[ 6 ] - Adicionar Serviço\n\n` +
+                      `Digite o número da opção desejada:`;
 
         await MegaApi.sendMessage(phone, texto);
 
@@ -38,38 +57,255 @@ export class AdminFlow {
 
     private static async stepAdminMenu(phone: string, message: string, session: any) {
         const option = message.trim();
+        const idProfissional = session.context_data.id_profissional;
 
         if (option === '1') {
             const { data: agendamentos } = await supabase.from('agendamentos')
-                .select(`id, data_hora, status, pacientes (nome)`)
-                .eq('id_profissional', session.context_data.id_profissional)
-                .eq('status', 'pendente');
+                .select(`id, data_hora, status, clientes (nome)`)
+                .eq('id_profissional', idProfissional)
+                .eq('status', 'pendente')
+                .order('data_hora', { ascending: true });
 
             if (!agendamentos || agendamentos.length === 0) {
-                await MegaApi.sendMessage(phone, "Você não tem agendamentos pendentes no momento.");
+                await MegaApi.sendMessage(phone, "Nenhum agendamento pendente.");
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+                await this.stepAdminStart(phone, session);
             } else {
-                let texto = "📅 *Agendamentos Pendentes:*\n\n";
-                agendamentos.forEach((a: any) => {
-                    texto += `- ${a.pacientes.nome} (em ${new Date(a.data_hora).toLocaleString()})\n`;
+                let texto = "⏳ *Agendamentos Pendentes:*\n\n";
+                agendamentos.forEach((a: any, index: number) => {
+                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
                 });
+                texto += `\nDigite o número do agendamento para APROVAR, ou digite 0 para voltar.`;
+                
+                await supabase.from('sessoes_whatsapp').update({ 
+                    current_step: 'AWAITING_APPROVAL',
+                    context_data: { ...session.context_data, pendentes: agendamentos }
+                }).eq('telefone', phone);
+                
                 await MegaApi.sendMessage(phone, texto);
             }
         } 
         else if (option === '2') {
-            await MegaApi.sendMessage(phone, "Para adicionar um serviço, por favor acesse o painel web.");
+            const { data: agendamentos } = await supabase.from('agendamentos')
+                .select(`id, data_hora, status, clientes (nome)`)
+                .eq('id_profissional', idProfissional)
+                .eq('status', 'confirmado')
+                .order('data_hora', { ascending: true });
+
+            if (!agendamentos || agendamentos.length === 0) {
+                await MegaApi.sendMessage(phone, "Sua agenda está vazia no momento.");
+            } else {
+                let texto = "✅ *Agenda Completa (Confirmados):*\n\n";
+                agendamentos.forEach((a: any) => {
+                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    texto += `- ${a.clientes.nome} - ${dataFormatada}\n`;
+                });
+                await MegaApi.sendMessage(phone, texto);
+            }
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            await this.stepAdminStart(phone, session);
         } 
         else if (option === '3') {
-            await MegaApi.sendMessage(phone, "Atendimento encerrado.");
+            await MegaApi.sendMessage(phone, "Para configurar sua disponibilidade:\nDigite o Dia da Semana (0-6 onde 0 é Domingo) e os horários.\nExemplo: 1 09:00 18:00\n\nOu digite 0 para cancelar.");
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'CONFIG_AVAILABILITY' }).eq('telefone', phone);
+        }
+        else if (option === '4') {
+            const { data: agendamentos } = await supabase.from('agendamentos')
+                .select(`id, data_hora, status, clientes (nome)`)
+                .eq('id_profissional', idProfissional)
+                .eq('status', 'confirmado')
+                .order('data_hora', { ascending: true });
+
+            if (!agendamentos || agendamentos.length === 0) {
+                await MegaApi.sendMessage(phone, "Nenhum agendamento confirmado para cancelar.");
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+                await this.stepAdminStart(phone, session);
+            } else {
+                let texto = "❌ *Cancelar Agendamento:*\n\n";
+                agendamentos.forEach((a: any, index: number) => {
+                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
+                });
+                texto += `\nDigite o número para CANCELAR, ou 0 para voltar.`;
+                
+                await supabase.from('sessoes_whatsapp').update({ 
+                    current_step: 'CANCEL_APPOINTMENT',
+                    context_data: { ...session.context_data, confirmados: agendamentos }
+                }).eq('telefone', phone);
+                await MegaApi.sendMessage(phone, texto);
+            }
+        }
+        else if (option === '5') {
+            const { data: agendamentos } = await supabase.from('agendamentos')
+                .select(`id, data_hora, status, clientes (nome)`)
+                .eq('id_profissional', idProfissional)
+                .eq('status', 'confirmado')
+                .order('data_hora', { ascending: true });
+
+            if (!agendamentos || agendamentos.length === 0) {
+                await MegaApi.sendMessage(phone, "Nenhum agendamento confirmado para remarcar.");
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+                await this.stepAdminStart(phone, session);
+            } else {
+                let texto = "🔄 *Remarcar Agendamento:*\n\n";
+                agendamentos.forEach((a: any, index: number) => {
+                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
+                });
+                texto += `\nDigite o número para REMARCAR, ou 0 para voltar.`;
+                
+                await supabase.from('sessoes_whatsapp').update({ 
+                    current_step: 'RESCHEDULE_APPOINTMENT',
+                    context_data: { ...session.context_data, confirmados: agendamentos }
+                }).eq('telefone', phone);
+                await MegaApi.sendMessage(phone, texto);
+            }
+        }
+        else if (option === '6') {
+            await MegaApi.sendMessage(phone, "Acesse o painel web (em breve) ou edite o banco de dados diretamente para adicionar novos serviços.");
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            await this.stepAdminStart(phone, session);
         }
         else {
             await MegaApi.sendMessage(phone, "Opção inválida.");
         }
+    }
 
-        // Reinicia o menu admin
-        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
-        if (option !== '3') {
-            // Re-enviar menu se não escolheu sair
-            await this.stepAdminStart(phone, session);
+    private static async stepAwaitingApproval(phone: string, message: string, session: any) {
+        const option = parseInt(message.trim());
+        if (option === 0) {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
         }
+
+        const pendentes = session.context_data?.pendentes || [];
+        if (isNaN(option) || option < 1 || option > pendentes.length) {
+            await MegaApi.sendMessage(phone, "Opção inválida.");
+            return;
+        }
+
+        const agendamento = pendentes[option - 1];
+        await supabase.from('agendamentos').update({ status: 'confirmado' }).eq('id', agendamento.id);
+
+        await MegaApi.sendMessage(phone, "Agendamento APROVADO com sucesso!");
+
+        // Notificar cliente
+        const { data: cliente } = await supabase.from('clientes').select('telefone').eq('nome', agendamento.clientes.nome).limit(1).single();
+        if (cliente?.telefone) {
+            const dataFormatada = new Date(agendamento.data_hora).toLocaleString('pt-BR');
+            await MegaApi.sendMessage(cliente.telefone, `✅ Olá! Seu agendamento para o dia ${dataFormatada} foi confirmado pelo profissional!`);
+        }
+
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
+    }
+
+    private static async stepConfigAvailability(phone: string, message: string, session: any) {
+        if (message.trim() === '0') {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+
+        const parts = message.split(' ');
+        if (parts.length >= 3) {
+            const dia = parseInt(parts[0]);
+            const inicio = parts[1];
+            const fim = parts[2];
+            
+            await supabase.from('disponibilidade_profissional').insert([{
+                id_profissional: session.context_data.id_profissional,
+                dia_semana: dia,
+                hora_inicio: inicio,
+                hora_fim: fim
+            }]);
+            
+            await MegaApi.sendMessage(phone, "Disponibilidade salva!");
+        } else {
+            await MegaApi.sendMessage(phone, "Formato inválido. Use: DIA INICIO FIM (ex: 1 09:00 18:00)");
+        }
+        
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
+    }
+
+    private static async stepCancelAppointment(phone: string, message: string, session: any) {
+        const option = parseInt(message.trim());
+        if (option === 0) {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+
+        const confirmados = session.context_data?.confirmados || [];
+        if (isNaN(option) || option < 1 || option > confirmados.length) {
+            await MegaApi.sendMessage(phone, "Opção inválida.");
+            return;
+        }
+
+        const agendamento = confirmados[option - 1];
+        await supabase.from('agendamentos').update({ status: 'cancelado' }).eq('id', agendamento.id);
+
+        await MegaApi.sendMessage(phone, "Agendamento CANCELADO com sucesso!");
+
+        // Notificar cliente
+        const { data: cliente } = await supabase.from('clientes').select('telefone').eq('nome', agendamento.clientes.nome).limit(1).single();
+        if (cliente?.telefone) {
+            const dataFormatada = new Date(agendamento.data_hora).toLocaleString('pt-BR');
+            await MegaApi.sendMessage(cliente.telefone, `❌ Olá! O profissional precisou cancelar o seu agendamento do dia ${dataFormatada}. Por favor, entre em contato para remarcar.`);
+        }
+
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
+    }
+
+    private static async stepRescheduleAppointment(phone: string, message: string, session: any) {
+        const option = parseInt(message.trim());
+        if (option === 0) {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+
+        const confirmados = session.context_data?.confirmados || [];
+        if (isNaN(option) || option < 1 || option > confirmados.length) {
+            await MegaApi.sendMessage(phone, "Opção inválida.");
+            return;
+        }
+
+        const agendamento = confirmados[option - 1];
+        
+        await supabase.from('sessoes_whatsapp').update({ 
+            current_step: 'RESCHEDULE_DATETIME',
+            context_data: { ...session.context_data, agendamento_remarcar: agendamento }
+        }).eq('telefone', phone);
+        
+        await MegaApi.sendMessage(phone, `Você escolheu remarcar o agendamento de ${agendamento.clientes.nome}.\nDigite a nova data e horário (Ex: 25/08 às 15:00):`);
+    }
+
+    private static async stepRescheduleDatetime(phone: string, message: string, session: any) {
+        const agendamento = session.context_data?.agendamento_remarcar;
+        
+        let dataAgendamento = new Date();
+        const match = message.match(/(\d{1,2})\/(\d{1,2})[^0-9]+(\d{1,2}):(\d{1,2})/);
+        if (match) {
+            const [, dia, mes, hora, minuto] = match;
+            dataAgendamento.setMonth(parseInt(mes) - 1, parseInt(dia));
+            dataAgendamento.setHours(parseInt(hora), parseInt(minuto), 0, 0);
+        } else {
+            dataAgendamento.setDate(dataAgendamento.getDate() + 1);
+        }
+
+        await supabase.from('agendamentos').update({ data_hora: dataAgendamento.toISOString() }).eq('id', agendamento.id);
+
+        await MegaApi.sendMessage(phone, "Agendamento REMARCADO com sucesso!");
+
+        // Notificar cliente
+        const { data: cliente } = await supabase.from('clientes').select('telefone').eq('nome', agendamento.clientes.nome).limit(1).single();
+        if (cliente?.telefone) {
+            const dataFormatada = dataAgendamento.toLocaleString('pt-BR');
+            await MegaApi.sendMessage(cliente.telefone, `🔄 Olá! O profissional remarcou o seu agendamento para o dia ${dataFormatada}.`);
+        }
+
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START', context_data: { id_profissional: session.context_data.id_profissional } }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
     }
 }
