@@ -10,7 +10,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
         const body = req.body;
         
-        // LOG TEMPORÁRIO PARA DEBUG DA MEGA API
+        // Previne loop infinito: se a mensagem foi enviada pelo próprio bot (fromMe), ignoramos
+        if (body.key?.fromMe === true) {
+            return res.status(200).send('Ignored fromMe');
+        }
+
+        // LOG TEMPORÁRIO PARA DEBUG DA MEGA API (mantendo pra testes)
         await supabase.from('logs_chat').insert([{
             telefone: 'DEBUG_RAW_PAYLOAD',
             mensagem: JSON.stringify(body).substring(0, 500),
