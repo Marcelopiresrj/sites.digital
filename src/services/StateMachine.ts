@@ -44,6 +44,12 @@ export class StateMachine {
             }
 
             // 5. Roteamento baseado no tipo de usuário
+            const msgLower = message.trim().toLowerCase();
+            if (msgLower === 'oi' || msgLower === 'olá' || msgLower === 'ola' || msgLower === 'menu') {
+                session.current_step = 'START';
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'START' }).eq('telefone', phone);
+            }
+
             if (isAdmin) {
                 // Se era START de paciente, altera para START de admin
                 if (session.current_step === 'START') {
