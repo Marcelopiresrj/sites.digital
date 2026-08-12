@@ -1,4 +1,14 @@
 {
+  "crons": [
+    {
+      "path": "/api/cron/lembretes-clientes",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/resumo-admin",
+      "schedule": "30 10 * * *"
+    }
+  ],
   "rewrites": [
     { "source": "/camim", "destination": "/sites/camim/camim.html" },
     { "source": "/victoire-essencias", "destination": "/sites/victoire-essencias/victoire-essencias.html" },
