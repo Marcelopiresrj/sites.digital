@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const MEGA_API_URL = 'https://apistart01.megaapi.com.br/megastart-MBA6X7WV85VHYBVZKNVWAHXH6H7/message/sendText';
+const MEGA_API_URL = 'https://apistart01.megaapi.com.br/rest/sendMessage/megastart-MBA6X7WV85VHYBVZKNVWAHXH6H7/text';
 const MEGA_API_TOKEN = 'MBA6X7WV85VHYBVZKNVWAHXH6H7';
 
 export class MegaApi {
@@ -25,8 +25,10 @@ export class MegaApi {
                     'Authorization': `Bearer ${MEGA_API_TOKEN}`
                 },
                 body: JSON.stringify({
-                    number: phone,
-                    text: text
+                    messageData: {
+                        to: phone,
+                        text: text
+                    }
                 })
             });
 
