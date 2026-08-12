@@ -17,8 +17,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             direcao: 'inbound'
         }]);
 
-        const phone = body.phone || body.sender || '';
-        const message = body.text || body.message || '';
+        let phone = body.phone || body.sender || '';
+        if (!phone && body.key && body.key.senderPn) {
+            phone = body.key.senderPn.split('@')[0];
+        } else if (!phone && body.key && body.key.remoteJid) {
+            phone = body.key.remoteJid.split('@')[0];
+        }
+
+        let message = body.text || '';
+        if (!message && body.message) {
+            if (typeof body.message === 'string') {
+                message = body.message;
+            } else if (body.message.conversation) {
+                message = body.message.conversation;
+            } else if (body.message.extendedTextMessage?.text) {
+                message = body.message.extendedTextMessage.text;
+            }
+        }
 
         const isGroup = body.isGroup || phone.includes('@g.us') || phone.includes('-');
         if (!phone || !message || isGroup) {
