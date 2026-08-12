@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { StateMachine } from '../src/services/StateMachine';
+import { supabase } from '../src/lib/supabase';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {
@@ -9,6 +10,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
         const body = req.body;
         
+        // LOG TEMPORÁRIO PARA DEBUG DA MEGA API
+        await supabase.from('logs_chat').insert([{
+            telefone: 'DEBUG_RAW_PAYLOAD',
+            mensagem: JSON.stringify(body).substring(0, 500),
+            direcao: 'inbound'
+        }]);
+
         const phone = body.phone || body.sender || '';
         const message = body.text || body.message || '';
 
