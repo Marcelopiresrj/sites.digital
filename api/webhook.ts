@@ -20,10 +20,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const cleanPhone = phone.replace(/[^0-9]/g, '');
         console.log(`[Webhook Vercel] Mensagem recebida de ${cleanPhone}: ${message}`);
 
-        // Fire and forget: dispara a máquina de estados sem await para liberar o webhook
-        StateMachine.processMessage(cleanPhone, message).catch(err => {
-            console.error('Erro na StateMachine:', err);
-        });
+        // Em Serverless (Vercel), DEVE-SE usar await, senão o ambiente
+        // congela a execução da função antes de terminar as chamadas ao Supabase.
+        await StateMachine.processMessage(cleanPhone, message);
 
         // Retorna imediatamente para a Mega API
         return res.status(200).send('OK');
