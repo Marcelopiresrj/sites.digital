@@ -39,16 +39,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const agendaPorProfissional: { [key: string]: any } = {};
 
         for (const ag of agendamentos) {
+            const profissional: any = ag.profissionais;
+            const cliente: any = ag.clientes;
+            const servico: any = ag.servicos;
             const idProfissional = ag.id_profissional;
+
             if (!agendaPorProfissional[idProfissional]) {
                 agendaPorProfissional[idProfissional] = {
-                    telefone: ag.profissionais.telefone,
-                    nome: ag.profissionais.nome,
+                    telefone: profissional.telefone,
+                    nome: profissional.nome,
                     agendamentos: [],
                     ids: []
                 };
             }
-            agendaPorProfissional[idProfissional].agendamentos.push(ag);
+            agendaPorProfissional[idProfissional].agendamentos.push({
+                data_hora: ag.data_hora,
+                clienteNome: cliente.nome,
+                servicoNome: servico.nome
+            });
             agendaPorProfissional[idProfissional].ids.push(ag.id);
         }
 
@@ -61,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
             for (const ag of profInfo.agendamentos) {
                 const horaStr = new Date(ag.data_hora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-                texto += `${horaStr} - ${ag.clientes.nome} (${ag.servicos.nome})\n`;
+                texto += `${horaStr} - ${ag.clienteNome} (${ag.servicoNome})\n`;
             }
 
             // Envia para o admin
