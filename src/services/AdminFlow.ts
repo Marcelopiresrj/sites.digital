@@ -17,8 +17,8 @@ export class AdminFlow {
             case 'AWAITING_APPROVAL':
                 await this.stepAwaitingApproval(phone, message, session);
                 break;
-            case 'CONFIG_AVAILABILITY':
-                await this.stepConfigAvailability(phone, message, session);
+            case 'ADD_SLOTS':
+                await this.stepAddSlots(phone, message, session);
                 break;
             case 'CANCEL_APPOINTMENT':
                 await this.stepCancelAppointment(phone, message, session);
@@ -41,7 +41,7 @@ export class AdminFlow {
         const texto = `Olá, *${profissional.nome}* (Profissional)!\n\n` +
                       `[ 1 ] - Ver Agendamentos Pendentes (Aprovar)\n` +
                       `[ 2 ] - Ver Agenda Completa (Confirmados)\n` +
-                      `[ 3 ] - Configurar Dias/Horários Disponíveis\n` +
+                      `[ 3 ] - Adicionar Horários Disponíveis\n` +
                       `[ 4 ] - Cancelar Agendamento\n` +
                       `[ 5 ] - Remarcar Agendamento\n` +
                       `[ 6 ] - Adicionar Serviço\n\n` +
@@ -107,8 +107,8 @@ export class AdminFlow {
             await this.stepAdminStart(phone, session);
         } 
         else if (option === '3') {
-            await MegaApi.sendMessage(phone, "Para configurar sua disponibilidade:\nDigite o Dia da Semana (0-6 onde 0 é Domingo) e os horários.\nExemplo: 1 09:00 18:00\n\nOu digite 0 para cancelar.");
-            await supabase.from('sessoes_whatsapp').update({ current_step: 'CONFIG_AVAILABILITY' }).eq('telefone', phone);
+            await MegaApi.sendMessage(phone, "Para cadastrar vagas:\nDigite a data e o horário disponível.\nExemplo: 21/08 10:00\n\nOu digite 0 para voltar ao menu.");
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADD_SLOTS' }).eq('telefone', phone);
         }
         else if (option === '4') {
             const { data: agendamentos } = await supabase.from('agendamentos')
@@ -201,32 +201,27 @@ export class AdminFlow {
         await this.stepAdminStart(phone, session);
     }
 
-    private static async stepConfigAvailability(phone: string, message: string, session: any) {
+    private static async stepAddSlots(phone: string, message: string, session: any) {
         if (message.trim() === '0') {
             await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
             return this.stepAdminStart(phone, session);
         }
 
-        const parts = message.split(' ');
-        if (parts.length >= 3) {
-            const dia = parseInt(parts[0]);
-            const inicio = parts[1];
-            const fim = parts[2];
-            
-            await supabase.from('disponibilidade_profissional').insert([{
+        const dataHoraVaga = message.trim();
+        
+        // Simples validação de tamanho mínimo (esperando algo como "21/08 10:00")
+        if (dataHoraVaga.length >= 8) {
+            await supabase.from('horarios_disponiveis').insert([{
                 id_profissional: session.context_data.id_profissional,
-                dia_semana: dia,
-                hora_inicio: inicio,
-                hora_fim: fim
+                data_hora: dataHoraVaga,
+                status: 'livre'
             }]);
             
-            await MegaApi.sendMessage(phone, "Disponibilidade salva!");
+            await MegaApi.sendMessage(phone, `✅ Horário [ ${dataHoraVaga} ] cadastrado com sucesso!\n\nDigite outro horário para adicionar mais vagas ou digite 0 para voltar.`);
+            // Mantém no mesmo step para loop
         } else {
-            await MegaApi.sendMessage(phone, "Formato inválido. Use: DIA INICIO FIM (ex: 1 09:00 18:00)");
+            await MegaApi.sendMessage(phone, "Formato inválido. Tente algo como: 21/08 10:00\nOu digite 0 para voltar.");
         }
-        
-        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
-        await this.stepAdminStart(phone, session);
     }
 
     private static async stepCancelAppointment(phone: string, message: string, session: any) {
