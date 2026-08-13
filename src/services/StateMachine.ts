@@ -43,11 +43,31 @@ export class StateMachine {
                 session.context_data = { ...session.context_data, is_admin: isAdmin };
             }
 
+            // Verifica se o cliente existe (se não for admin)
+            let isCliente = session.context_data?.is_cliente;
+            if (isCliente === undefined && !isAdmin) {
+                const { data: cliente } = await supabase.from('clientes').select('id').eq('telefone', phone).single();
+                isCliente = !!cliente;
+                await supabase.from('sessoes_whatsapp').update({
+                    context_data: { ...session.context_data, is_cliente: isCliente }
+                }).eq('telefone', phone);
+                session.context_data = { ...session.context_data, is_cliente: isCliente };
+            }
+
             // 5. Roteamento baseado no tipo de usuário
             const msgLower = message.trim().toLowerCase();
             if (msgLower === 'oi' || msgLower === 'olá' || msgLower === 'ola' || msgLower === 'menu') {
-                session.current_step = 'START';
-                await supabase.from('sessoes_whatsapp').update({ current_step: 'START' }).eq('telefone', phone);
+                if (!isAdmin && !isCliente) {
+                    session.current_step = 'ONBOARDING_AGUARDANDO_NOME';
+                    await supabase.from('sessoes_whatsapp').update({ current_step: 'ONBOARDING_AGUARDANDO_NOME' }).eq('telefone', phone);
+                } else {
+                    session.current_step = 'START';
+                    await supabase.from('sessoes_whatsapp').update({ current_step: 'START' }).eq('telefone', phone);
+                }
+            } else if (!isAdmin && !isCliente && session.current_step === 'START') {
+                // Se a primeira mensagem não foi Oi/Olá e caiu em START, forçamos onboarding
+                session.current_step = 'ONBOARDING_AGUARDANDO_NOME';
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'ONBOARDING_AGUARDANDO_NOME' }).eq('telefone', phone);
             }
 
             if (isAdmin) {

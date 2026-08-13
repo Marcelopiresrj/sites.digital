@@ -11,6 +11,12 @@ export class ClientFlow {
             case 'START':
                 await this.stepStart(phone, session);
                 break;
+            case 'ONBOARDING_AGUARDANDO_NOME':
+                await this.stepOnboardingAguardandoNome(phone, message, session);
+                break;
+            case 'MENU_CLIENTE':
+                await this.stepMenuCliente(phone, message, session);
+                break;
             case 'CHOOSE_SERVICE':
                 await this.stepChooseService(phone, message, session);
                 break;
@@ -23,24 +29,78 @@ export class ClientFlow {
         }
     }
 
-    private static async stepStart(phone: string, session: any) {
-        // Verifica se o cliente já está cadastrado
-        let { data: cliente } = await supabase.from('clientes').select('*').eq('telefone', phone).single();
-
-        let nomeStr = '';
-        if (!cliente) {
-            // Se não existe, podemos inserir com um nome provisório ou pedir o nome depois
-            const { data: novoCliente } = await supabase.from('clientes').insert([{ telefone: phone, nome: 'Cliente' }]).select().single();
-            cliente = novoCliente;
-        } else {
-            nomeStr = ` ${cliente.nome}`;
+    private static async stepOnboardingAguardandoNome(phone: string, message: string, session: any) {
+        const nome = message.trim();
+        
+        // Inserir no banco
+        const { data: novoCliente, error } = await supabase.from('clientes').insert([{ telefone: phone, nome: nome }]).select().single();
+        
+        if (error || !novoCliente) {
+            await MegaApi.sendMessage(phone, "Desculpe, ocorreu um erro ao salvar seu cadastro. Poderia digitar seu nome novamente?");
+            return;
         }
 
+        // Notificar o Admin (ID 1 - pegamos o primeiro cadastrado)
+        const { data: admin } = await supabase.from('profissionais').select('telefone').order('id', { ascending: true }).limit(1).single();
+        if (admin && admin.telefone) {
+            await MegaApi.sendMessage(admin.telefone, `🔔 *Novo Cliente Cadastrado!*\nNome: ${nome}\nTelefone: ${phone}`);
+        }
+
+        let texto = `Prazer em te conhecer, ${nome}! Seu cadastro foi feito com sucesso. Como posso ajudar hoje?\n`;
+        texto += `[ 1 ] - Agendar dia e horário\n`;
+        texto += `[ 2 ] - Remarcar meu horário\n`;
+        texto += `[ 3 ] - Cancelar agendamento`;
+        
+        await MegaApi.sendMessage(phone, texto);
+        
+        await supabase.from('sessoes_whatsapp').update({
+            current_step: 'MENU_CLIENTE',
+            context_data: { id_cliente: novoCliente.id }
+        }).eq('telefone', phone);
+    }
+
+    private static async stepStart(phone: string, session: any) {
+        if (!session.context_data?.id_cliente) {
+            const { data: cliente } = await supabase.from('clientes').select('id, nome').eq('telefone', phone).single();
+            if (cliente) {
+                session.context_data = { ...session.context_data, id_cliente: cliente.id };
+            }
+        }
+
+        const { data: cliente } = await supabase.from('clientes').select('nome').eq('id', session.context_data?.id_cliente).single();
+        const nomeStr = cliente ? ` ${cliente.nome}` : '';
+
+        let texto = `Olá${nomeStr}! Bem-vindo ao nosso atendimento virtual. Como posso ajudar hoje?\n`;
+        texto += `[ 1 ] - Agendar dia e horário\n`;
+        texto += `[ 2 ] - Remarcar meu horário\n`;
+        texto += `[ 3 ] - Cancelar agendamento`;
+
+        await MegaApi.sendMessage(phone, texto);
+
+        await supabase.from('sessoes_whatsapp').update({
+            current_step: 'MENU_CLIENTE',
+            context_data: session.context_data
+        }).eq('telefone', phone);
+    }
+
+    private static async stepMenuCliente(phone: string, message: string, session: any) {
+        const option = parseInt(message.trim());
+        
+        if (option === 1) {
+            await this.stepListServices(phone, session);
+        } else if (option === 2 || option === 3) {
+            await MegaApi.sendMessage(phone, "Funcionalidade em desenvolvimento. Em breve você poderá gerenciar seus agendamentos por aqui!");
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'START' }).eq('telefone', phone);
+        } else {
+            await MegaApi.sendMessage(phone, "Opção inválida. Por favor, digite 1, 2 ou 3.");
+        }
+    }
+
+    private static async stepListServices(phone: string, session: any) {
         // Buscar serviços ativos
         const { data: servicos } = await supabase.from('servicos').select('*').limit(15);
         
-        let texto = `Olá${nomeStr}! Bem-vindo ao AgendaZap. Como posso ajudar hoje?\n\n`;
-        texto += `Responda com o *NÚMERO* do serviço que deseja agendar:\n\n`;
+        let texto = `Para começarmos, responda com o *NÚMERO* do serviço que deseja agendar:\n\n`;
         
         if (servicos && servicos.length > 0) {
             servicos.forEach((s: any, index: number) => {
@@ -52,10 +112,9 @@ export class ClientFlow {
 
         await MegaApi.sendMessage(phone, texto);
 
-        // Atualizar sessão
         await supabase.from('sessoes_whatsapp').update({
             current_step: 'CHOOSE_SERVICE',
-            context_data: { servicos_list: servicos, id_cliente: cliente.id }
+            context_data: { ...session.context_data, servicos_list: servicos }
         }).eq('telefone', phone);
     }
 
