@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { MegaApi } from './MegaApi';
+import { formatDateBR } from '../utils/dateFormatter';
 
 export class AdminFlow {
     static async handle(phone: string, message: string, session: any) {
@@ -29,6 +30,15 @@ export class AdminFlow {
             case 'RESCHEDULE_DATETIME':
                 await this.stepRescheduleDatetime(phone, message, session);
                 break;
+            case 'ADD_SERVICE':
+                await this.stepAddService(phone, message, session);
+                break;
+            case 'EDIT_SERVICE_ID':
+                await this.stepEditServiceID(phone, message, session);
+                break;
+            case 'EDIT_SERVICE_DATA':
+                await this.stepEditServiceData(phone, message, session);
+                break;
             default:
                 await this.stepAdminStart(phone, session);
                 break;
@@ -44,7 +54,8 @@ export class AdminFlow {
                       `[ 3 ] - Adicionar Horários Disponíveis\n` +
                       `[ 4 ] - Cancelar Agendamento\n` +
                       `[ 5 ] - Remarcar Agendamento\n` +
-                      `[ 6 ] - Adicionar Serviço\n\n` +
+                      `[ 6 ] - Adicionar Serviço\n` +
+                      `[ 7 ] - Editar Serviço\n\n` +
                       `Digite o número da opção desejada:`;
 
         await MegaApi.sendMessage(phone, texto);
@@ -73,7 +84,7 @@ export class AdminFlow {
             } else {
                 let texto = "⏳ *Agendamentos Pendentes:*\n\n";
                 agendamentos.forEach((a: any, index: number) => {
-                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    const dataFormatada = formatDateBR(a.data_hora);
                     texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
                 });
                 texto += `\nDigite o número do agendamento para APROVAR, ou digite 0 para voltar.`;
@@ -98,7 +109,7 @@ export class AdminFlow {
             } else {
                 let texto = "✅ *Agenda Completa (Confirmados):*\n\n";
                 agendamentos.forEach((a: any) => {
-                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    const dataFormatada = formatDateBR(a.data_hora);
                     texto += `- ${a.clientes.nome} - ${dataFormatada}\n`;
                 });
                 await MegaApi.sendMessage(phone, texto);
@@ -124,7 +135,7 @@ export class AdminFlow {
             } else {
                 let texto = "❌ *Cancelar Agendamento:*\n\n";
                 agendamentos.forEach((a: any, index: number) => {
-                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    const dataFormatada = formatDateBR(a.data_hora);
                     texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
                 });
                 texto += `\nDigite o número para CANCELAR, ou 0 para voltar.`;
@@ -150,7 +161,7 @@ export class AdminFlow {
             } else {
                 let texto = "🔄 *Remarcar Agendamento:*\n\n";
                 agendamentos.forEach((a: any, index: number) => {
-                    const dataFormatada = new Date(a.data_hora).toLocaleString('pt-BR');
+                    const dataFormatada = formatDateBR(a.data_hora);
                     texto += `[ ${index + 1} ] - ${a.clientes.nome} - ${dataFormatada}\n`;
                 });
                 texto += `\nDigite o número para REMARCAR, ou 0 para voltar.`;
@@ -163,9 +174,26 @@ export class AdminFlow {
             }
         }
         else if (option === '6') {
-            await MegaApi.sendMessage(phone, "Acesse o painel web (em breve) ou edite o banco de dados diretamente para adicionar novos serviços.");
-            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
-            await this.stepAdminStart(phone, session);
+            await MegaApi.sendMessage(phone, "👉 Serviço NOVO: Digite o NOME, a DURAÇÃO em minutos e o PREÇO (Ex: Corte Degradê - 40 - 45,00):");
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADD_SERVICE' }).eq('telefone', phone);
+        }
+        else if (option === '7') {
+            const { data: servicos } = await supabase.from('servicos').select('*').eq('id_profissional', idProfissional).order('id', { ascending: true });
+            if (!servicos || servicos.length === 0) {
+                await MegaApi.sendMessage(phone, "Nenhum serviço cadastrado.");
+                await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+                await this.stepAdminStart(phone, session);
+                return;
+            }
+            let texto = "Qual serviço deseja editar? Digite o número correspondente:\n\n";
+            servicos.forEach((s: any, i: number) => {
+                texto += `[ ${i + 1} ] - ${s.nome} (${s.duracao_minutos} min - R$ ${Number(s.preco || 0).toFixed(2).replace('.', ',')})\n`;
+            });
+            await supabase.from('sessoes_whatsapp').update({ 
+                current_step: 'EDIT_SERVICE_ID', 
+                context_data: { ...session.context_data, servicos_edit: servicos }
+            }).eq('telefone', phone);
+            await MegaApi.sendMessage(phone, texto);
         }
         else {
             await MegaApi.sendMessage(phone, "Opção inválida.");
@@ -193,7 +221,7 @@ export class AdminFlow {
         // Notificar cliente
         const { data: cliente } = await supabase.from('clientes').select('telefone').eq('nome', agendamento.clientes.nome).limit(1).single();
         if (cliente?.telefone) {
-            const dataFormatada = new Date(agendamento.data_hora).toLocaleString('pt-BR');
+            const dataFormatada = formatDateBR(agendamento.data_hora);
             await MegaApi.sendMessage(cliente.telefone, `✅ Olá! Seu agendamento para o dia ${dataFormatada} foi confirmado pelo profissional!`);
         }
 
@@ -296,10 +324,88 @@ export class AdminFlow {
         // Notificar cliente
         const { data: cliente } = await supabase.from('clientes').select('telefone').eq('nome', agendamento.clientes.nome).limit(1).single();
         if (cliente?.telefone) {
-            const dataFormatada = dataAgendamento.toLocaleString('pt-BR');
+            const dataFormatada = formatDateBR(dataAgendamento.toISOString());
             await MegaApi.sendMessage(cliente.telefone, `🔄 Olá! O profissional remarcou o seu agendamento para o dia ${dataFormatada}.`);
         }
 
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START', context_data: { id_profissional: session.context_data.id_profissional } }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
+    }
+
+    private static async stepAddService(phone: string, message: string, session: any) {
+        if (message.trim() === '0') {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+        
+        const parts = message.split('-').map(p => p.trim());
+        if (parts.length >= 3) {
+            const nome = parts[0];
+            const duracao = parseInt(parts[1]);
+            const preco = parseFloat(parts[2].replace(',', '.'));
+            
+            await supabase.from('servicos').insert([{
+                id_profissional: session.context_data.id_profissional,
+                nome: nome,
+                duracao_minutos: duracao,
+                preco: preco
+            }]);
+            
+            await MegaApi.sendMessage(phone, "✅ Serviço cadastrado com sucesso!");
+        } else {
+            await MegaApi.sendMessage(phone, "Formato inválido. Use: Nome - Duração - Preço (Ex: Corte Degradê - 40 - 45,00)\nOu digite 0 para voltar.");
+            return;
+        }
+        await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+        await this.stepAdminStart(phone, session);
+    }
+
+    private static async stepEditServiceID(phone: string, message: string, session: any) {
+        const option = parseInt(message.trim());
+        if (option === 0) {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+        
+        const servicos = session.context_data?.servicos_edit || [];
+        if (isNaN(option) || option < 1 || option > servicos.length) {
+            await MegaApi.sendMessage(phone, "Opção inválida. Digite o número correspondente.");
+            return;
+        }
+        
+        const servicoSelecionado = servicos[option - 1];
+        await supabase.from('sessoes_whatsapp').update({ 
+            current_step: 'EDIT_SERVICE_DATA',
+            context_data: { ...session.context_data, servico_editando: servicoSelecionado }
+        }).eq('telefone', phone);
+        
+        await MegaApi.sendMessage(phone, `Você escolheu editar: *${servicoSelecionado.nome}*\n\nDigite os novos dados do serviço (Nome - Duração - Preço)\nEx: Corte Simples - 30 - 30,00`);
+    }
+
+    private static async stepEditServiceData(phone: string, message: string, session: any) {
+        if (message.trim() === '0') {
+            await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START' }).eq('telefone', phone);
+            return this.stepAdminStart(phone, session);
+        }
+        
+        const parts = message.split('-').map(p => p.trim());
+        if (parts.length >= 3) {
+            const nome = parts[0];
+            const duracao = parseInt(parts[1]);
+            const preco = parseFloat(parts[2].replace(',', '.'));
+            
+            const servico = session.context_data?.servico_editando;
+            await supabase.from('servicos').update({
+                nome: nome,
+                duracao_minutos: duracao,
+                preco: preco
+            }).eq('id', servico.id);
+            
+            await MegaApi.sendMessage(phone, "✅ Serviço atualizado com sucesso!");
+        } else {
+            await MegaApi.sendMessage(phone, "Formato inválido. Use: Nome - Duração - Preço (Ex: Corte Simples - 30 - 30,00)\nOu digite 0 para cancelar.");
+            return;
+        }
         await supabase.from('sessoes_whatsapp').update({ current_step: 'ADMIN_START', context_data: { id_profissional: session.context_data.id_profissional } }).eq('telefone', phone);
         await this.stepAdminStart(phone, session);
     }

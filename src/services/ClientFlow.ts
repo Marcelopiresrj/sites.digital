@@ -104,7 +104,8 @@ export class ClientFlow {
         
         if (servicos && servicos.length > 0) {
             servicos.forEach((s: any, index: number) => {
-                texto += `${index + 1}. ${s.nome} (${s.duracao_minutos} min)\n`;
+                const precoStr = s.preco ? ` - R$ ${Number(s.preco).toFixed(2).replace('.', ',')}` : '';
+                texto += `${index + 1}. ${s.nome} (${s.duracao_minutos} min)${precoStr}\n`;
             });
         } else {
             texto += `No momento não temos serviços configurados. Aguarde um instante!`;
